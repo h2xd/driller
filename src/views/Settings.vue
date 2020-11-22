@@ -39,8 +39,18 @@ export default defineComponent({
 
     const selectedGender = ref(Gender.MALE);
 
+    const genderConsumption = {
+      [Gender.MALE]: 5,
+      [Gender.FEMALE]: -161,
+      [Gender.DIVERS]: 0
+    };
+
     const bmr = computed(
-      () => 10 * weight.value + 6.25 * height.value - 5 * age.value + 5
+      () =>
+        10 * weight.value +
+        6.25 * height.value -
+        5 * age.value +
+        genderConsumption[selectedGender.value]
     );
 
     function handleChange(value: Gender) {
