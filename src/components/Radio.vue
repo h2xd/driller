@@ -1,12 +1,19 @@
 <template>
   <div v-for="(element, index) in group" :key="index">
-    <label :for="name">{{ element.label }}</label>
-    <input
-      type="radio"
-      :name="name"
-      :value="element.value"
-      v-model="element.checked"
-    />
+    <label :for="element.id">
+      {{ element.value }}
+
+      <input
+        type="radio"
+        :id="element.id"
+        :name="name"
+        :value="element.value"
+        :checked="element.value === value"
+        @change="
+          event => (event.target.checked ? $emit('change', element.value) : '')
+        "
+      />
+    </label>
   </div>
 </template>
 
@@ -15,16 +22,15 @@ import { defineComponent, PropType } from "vue";
 
 type RadioElement = {
   name: string;
-  label: string;
   value: string | number;
-  checked: boolean;
 };
 
 export default defineComponent({
   inheritAttrs: false,
   props: {
     group: { type: Array as PropType<RadioElement[]>, required: true },
-    name: String
+    name: { type: String, required: true },
+    value: { type: String, required: true }
   }
 });
 </script>
