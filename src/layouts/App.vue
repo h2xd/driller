@@ -1,10 +1,16 @@
 <template>
-  Simple App Layout
-  <div>
-    <slot name="default" />
-  </div>
+  <AppNavigation />
+  <slot name="default" />
 </template>
 
-<script lang="ts"></script>
+<script lang="ts">
+import AppNavigation from "@/components/navigation/App.vue";
+
+export default {
+  components: {
+    AppNavigation
+  }
+};
+</script>
 
 <style lang="scss" scoped></style>
