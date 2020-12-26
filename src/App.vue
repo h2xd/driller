@@ -5,9 +5,17 @@
 <script lang="ts">
 import { ROUTES } from "@/router";
 import { APP_ROUTES } from "@/router/app";
+import { useExperienceStore } from "@/store/experience";
 
 export default {
   setup() {
+    const ExperienceStore = useExperienceStore();
+
+    ExperienceStore.$subscribe(({ storeName }, state) => {
+      console.log(storeName, state);
+      localStorage.setItem(`state:${storeName}`, JSON.stringify(state));
+    });
+
     return {
       ROUTES,
       APP_ROUTES

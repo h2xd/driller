@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "core-js": "^3.8.1",
+    "pinia": "^2.0.0-alpha.5",
     "register-service-worker": "^1.7.2",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+    "vue-router": "^4.0.0-0"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^11.0.0",
