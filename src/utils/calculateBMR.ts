@@ -13,7 +13,7 @@ type CalculateBMROptions = {
   gender: Gender;
 };
 
-export function calculateBMR(options: CalculateBMROptions) {
+export function calculateBMR(options: CalculateBMROptions): number {
   const { weight, height, gender, age } = options;
 
   return 10 * weight + 6.25 * height - 5 * age + genderConsumption[gender];
