@@ -1,11 +1,14 @@
 import { RouteRecordRaw } from "vue-router";
-
-const APP_PATH = "/app";
+import { PUSHUP_PATHS, pushUpRouter } from "@/exercises/pushup/routes";
+import { APP_PATH } from "@/router/paths";
 
 export const APP_ROUTES = {
   home: `${APP_PATH}`,
-  settings: `${APP_PATH}/settings`
-};
+  settings: `${APP_PATH}/settings`,
+  exercises: {
+    pushup: PUSHUP_PATHS
+  }
+} as const;
 
 export const appRoutes: Array<RouteRecordRaw> = [
   {
@@ -19,5 +22,6 @@ export const appRoutes: Array<RouteRecordRaw> = [
     name: "App/Settings",
     component: () =>
       import(/* webpackChunkName: "app-settings" */ "@/views/app/Settings.vue")
-  }
+  },
+  ...pushUpRouter
 ];
