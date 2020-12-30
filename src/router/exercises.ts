@@ -8,25 +8,25 @@ type ExerciseGroupRouteFactory = {
   createRoute: (exersicePath: string, exersiceName: string) => RouteRecordRaw;
 };
 
-export function createExersiceGroupRouteFactory(
+export function createExerciseGroupRouteFactory(
   groupPath: string,
   groupName: string
 ): ExerciseGroupRouteFactory {
   const generatedGroupPath = createPath(groupPath);
   const generateGroupPath = (path: string) => createPath(groupPath + path);
 
-  const generateExersicePath = (exersicePath: string) =>
+  const generateExercisePath = (exersicePath: string) =>
     generateGroupPath(exersicePath);
 
   return {
     groupPath: { home: generatedGroupPath },
     createGroupRoute: groupPaths =>
       createGroupRoute(generatedGroupPath, groupName, groupPaths),
-    createPath: generateExersicePath,
-    createRoute: (exersicePath, exersiceName) =>
-      createExersiceRoute({
-        path: exersicePath,
-        name: `${groupName}/${exersiceName}`,
+    createPath: generateExercisePath,
+    createRoute: (exercisePath, exerciseName) =>
+      createExerciseRoute({
+        path: exercisePath,
+        name: `${groupName}/${exerciseName}`,
         groupPath: generatedGroupPath
       })
   };
@@ -48,17 +48,17 @@ function createGroupRoute(
   };
 }
 
-type CreateExersiceRouteOptions = {
+type CreateExerciseRouteOptions = {
   path: string;
   name: string;
   groupPath: string;
 };
 
-function createExersiceRoute({
+function createExerciseRoute({
   path,
   name,
   groupPath
-}: CreateExersiceRouteOptions): RouteRecordRaw {
+}: CreateExerciseRouteOptions): RouteRecordRaw {
   return {
     path,
     name: `App/${name}`,
