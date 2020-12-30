@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { APP_ROUTES } from "@/router/app";
+import { APP_ROUTES } from "@/router";
 
 export default {
   setup() {

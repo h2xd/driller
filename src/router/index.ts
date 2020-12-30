@@ -2,19 +2,19 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "@/views/Home.vue";
 import { appRoutes } from "@/router/app";
 
-export const ROUTES = {
+export const DEFAULT_ROUTES = {
   home: "/",
   about: "/about"
 };
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: ROUTES.home,
+    path: DEFAULT_ROUTES.home,
     name: "Home",
     component: Home
   },
   {
-    path: ROUTES.about,
+    path: DEFAULT_ROUTES.about,
     name: "About",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -30,3 +30,4 @@ const router = createRouter({
 });
 
 export default router;
+export * from "./app";

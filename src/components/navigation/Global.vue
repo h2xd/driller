@@ -1,19 +1,18 @@
 <template>
   <div class="nav">
-    <router-link :to="ROUTES.home">Home</router-link> |
-    <router-link :to="ROUTES.about">About</router-link> |
+    <router-link :to="DEFAULT_ROUTES.home">Home</router-link> |
+    <router-link :to="DEFAULT_ROUTES.about">About</router-link> |
     <router-link :to="APP_ROUTES.home">App</router-link>
   </div>
 </template>
 
 <script lang="ts">
-import { ROUTES } from "@/router";
-import { APP_ROUTES } from "@/router/app";
+import { DEFAULT_ROUTES, APP_ROUTES } from "@/router";
 
 export default {
   setup() {
     return {
-      ROUTES,
+      DEFAULT_ROUTES,
       APP_ROUTES
     };
   }
