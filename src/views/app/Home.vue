@@ -7,7 +7,9 @@
       Remaining: {{ ExperienceStore.remaining }}
     </div>
 
-    <button @click.prevent="ExperienceStore.addToLevel(2000)">Add</button>
+    <button @click.prevent="ExperienceStore.addToLevel(20)">Add 20</button>
+    <button @click.prevent="ExperienceStore.addToLevel(200)">Add 200</button>
+    <button @click.prevent="ExperienceStore.addToLevel(2000)">Add 2000</button>
   </AppLayout>
 </template>
 

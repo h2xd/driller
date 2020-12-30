@@ -3,9 +3,8 @@
 </template>
 
 <script lang="ts">
-import { ROUTES } from "@/router";
-import { APP_ROUTES } from "@/router/app";
 import { useExperienceStore } from "@/store/experience";
+import { writeToLocalStorage } from "@/utils/localStorage";
 
 export default {
   setup() {
@@ -13,13 +12,8 @@ export default {
 
     ExperienceStore.$subscribe(({ storeName }, state) => {
       console.log(storeName, state);
-      localStorage.setItem(`state:${storeName}`, JSON.stringify(state));
+      writeToLocalStorage(storeName, state);
     });
-
-    return {
-      ROUTES,
-      APP_ROUTES
-    };
   }
 };
 </script>
