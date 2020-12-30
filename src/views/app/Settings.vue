@@ -20,8 +20,8 @@ import { Gender } from "@/@types/gender";
 import { calculateBMR } from "@/utils/calculateBMR";
 
 import AppLayout from "@/layouts/App.vue";
-import Input from "@/components/Input.vue";
-import Radio from "@/components/Radio.vue";
+import Input from "@/components/base/Input.vue";
+import Radio from "@/components/base/Radio.vue";
 
 export default defineComponent({
   components: {
