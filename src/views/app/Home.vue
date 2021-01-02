@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import AppLayout from "@/layouts/App.vue";
-import { useExperienceStore } from "@/store/experience";
+import { useExperienceStore } from "@/stores/experience";
 import { APP_ROUTES } from "@/router";
 
 export default {

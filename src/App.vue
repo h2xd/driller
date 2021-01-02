@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { useExperienceStore } from "@/store/experience";
+import { useExperienceStore } from "@/stores/experience";
 import { writeToLocalStorage } from "@/utils/localStorage";
 
 export default {
