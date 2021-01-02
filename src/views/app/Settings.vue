@@ -1,25 +1,31 @@
 <template>
-  <Input label="Age" name="age" v-model="age" />
-  <Input label="Height" name="height" v-model="height" />
-  <Input label="Weight" name="weight" v-model="weight" />
-  <Radio
-    :group="radioGroup"
-    name="gender"
-    :value="selectedGender"
-    @change="handleChange"
-  />
-  bmr:{{ bmr }}
+  <AppLayout>
+    <Input label="Age" name="age" v-model="age" />
+    <Input label="Height" name="height" v-model="height" />
+    <Input label="Weight" name="weight" v-model="weight" />
+    <Radio
+      :group="radioGroup"
+      name="gender"
+      :value="selectedGender"
+      @change="handleChange"
+    />
+    bmr:{{ bmr }}
+  </AppLayout>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
-import Input from "@/components/Input.vue";
-import Radio from "@/components/Radio.vue";
+
 import { Gender } from "@/@types/gender";
 import { calculateBMR } from "@/utils/calculateBMR";
 
+import AppLayout from "@/layouts/App.vue";
+import Input from "@/components/base/Input.vue";
+import Radio from "@/components/base/Radio.vue";
+
 export default defineComponent({
   components: {
+    AppLayout,
     Input,
     Radio
   },

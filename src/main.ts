@@ -2,9 +2,9 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
-import store from "./store";
+import { createPinia as installPinia } from "pinia";
 
 createApp(App)
-  .use(store)
+  .use(installPinia())
   .use(router)
   .mount("#app");
