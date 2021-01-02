@@ -15,6 +15,7 @@
 import { APP_ROUTES } from "@/router";
 
 import AppLayout from "@/layouts/App.vue";
+import { useRoute } from "vue-router";
 
 export default {
   components: {
@@ -24,6 +25,10 @@ export default {
     lets: String
   },
   setup() {
+    const route = useRoute();
+    const groupStore = route.meta.groupStore();
+    console.log(groupStore);
+
     return {
       APP_ROUTES
     };

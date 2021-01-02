@@ -2,10 +2,32 @@
   <AppLayout>
     <h1>App Home</h1>
 
-    <div>
-      {{ ExperienceStore.total }} XP | Lvl. {{ ExperienceStore.level }} |
-      Remaining: {{ ExperienceStore.remaining }}
-    </div>
+    <h2>Stats</h2>
+
+    <table>
+      <tbody>
+        <tr>
+          <th>Level</th>
+          <td>{{ ExperienceStore.level }}</td>
+        </tr>
+        <tr>
+          <th>XP</th>
+          <td>{{ ExperienceStore.total }}</td>
+        </tr>
+        <tr>
+          <th>Next Level</th>
+          <td>{{ ExperienceStore.nextLevel }}</td>
+        </tr>
+        <tr>
+          <th>Next Level At</th>
+          <td>{{ ExperienceStore.nextLevelAt }}</td>
+        </tr>
+        <tr>
+          <th>Remaining</th>
+          <td>{{ ExperienceStore.remainingToNextLevel }}</td>
+        </tr>
+      </tbody>
+    </table>
 
     <ul>
       <li v-for="(group, groupName) in APP_ROUTES.exercises" :key="groupName">
@@ -26,7 +48,7 @@
 
 <script lang="ts">
 import AppLayout from "@/layouts/App.vue";
-import { useExperienceStore } from "@/stores/experience";
+import { useGlobalExperienceStore } from "@/stores/globalExperienceStore";
 import { APP_ROUTES } from "@/router";
 
 export default {
@@ -34,7 +56,7 @@ export default {
     AppLayout
   },
   setup() {
-    const ExperienceStore = useExperienceStore();
+    const ExperienceStore = useGlobalExperienceStore();
 
     return {
       APP_ROUTES,

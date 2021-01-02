@@ -3,12 +3,12 @@
 </template>
 
 <script lang="ts">
-import { useExperienceStore } from "@/stores/experience";
+import { useGlobalExperienceStore } from "@/stores/globalExperienceStore";
 import { writeToLocalStorage } from "@/utils/localStorage";
 
 export default {
   setup() {
-    const ExperienceStore = useExperienceStore();
+    const ExperienceStore = useGlobalExperienceStore();
 
     ExperienceStore.$subscribe(({ storeName }, state) => {
       console.log(storeName, state);

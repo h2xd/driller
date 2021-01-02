@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 import { APP_PATH } from "@/router/paths";
+import { createExperienceStore } from "@/stores/createExperienceStore";
 
 type ExerciseGroupRouteFactory = {
   groupPath: { home: string };
@@ -10,7 +11,8 @@ type ExerciseGroupRouteFactory = {
 
 export function createExerciseGroupRouteFactory(
   groupPath: string,
-  groupName: string
+  groupName: string,
+  groupStore: ReturnType<typeof createExperienceStore>
 ): ExerciseGroupRouteFactory {
   const generatedGroupPath = createPath(groupPath);
   const generateGroupPath = (path: string) => createPath(groupPath + path);
@@ -27,7 +29,8 @@ export function createExerciseGroupRouteFactory(
       createExerciseRoute({
         path: exercisePath,
         name: `${groupName}/${exerciseName}`,
-        groupPath: generatedGroupPath
+        groupPath: generatedGroupPath,
+        groupStore
       })
   };
 }
@@ -52,18 +55,21 @@ type CreateExerciseRouteOptions = {
   path: string;
   name: string;
   groupPath: string;
+  groupStore: ReturnType<typeof createExperienceStore>;
 };
 
 function createExerciseRoute({
   path,
   name,
-  groupPath
+  groupPath,
+  groupStore
 }: CreateExerciseRouteOptions): RouteRecordRaw {
   return {
     path,
     name: `App/${name}`,
     meta: {
-      groupPath
+      groupPath,
+      groupStore
     },
     component: () =>
       import(

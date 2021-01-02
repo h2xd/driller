@@ -1,12 +1,17 @@
 import { RouteRecordRaw } from "vue-router";
 import { createExerciseGroupRouteFactory } from "@/router/exercises";
+import { usePushUpExperienceStore } from "@/exercises/pushup/store";
 
 const {
   groupPath,
   createGroupRoute,
   createPath,
   createRoute
-} = createExerciseGroupRouteFactory("/pushup", "PushUp");
+} = createExerciseGroupRouteFactory(
+  "/pushup",
+  "PushUp",
+  usePushUpExperienceStore
+);
 
 export const internalPushUpPaths = {
   classic: createPath("/classic"),
