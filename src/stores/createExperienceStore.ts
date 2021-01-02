@@ -33,7 +33,7 @@ function evaluateLevel(
 ): number {
   let level = 0;
 
-  while (total > roundLevelExperience(level, options)) {
+  while (total >= roundLevelExperience(level, options)) {
     level += 1;
   }
 
