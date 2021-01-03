@@ -8,6 +8,8 @@
       {{ $route.path }}
     </pre>
 
+    <div>Unlocked: {{ !ExerciseStore.locked }}</div>
+
     <h2>Clock</h2>
     Running: {{ clock.isRunning }}<br />
     Time: {{ clock.duration }}ms<br />
@@ -49,15 +51,18 @@ export default {
     treeKey: String as PropType<ExerciseTreeRoute["props"]["treeKey"]>,
     treeStore: Function as PropType<ExerciseTreeRoute["props"]["treeStore"]>,
     treePath: String as PropType<ExerciseTreeRoute["props"]["treePath"]>,
-    exerciseKey: String as PropType<ExerciseTreeRoute["props"]["exerciseKey"]>
+    exerciseKey: String as PropType<ExerciseTreeRoute["props"]["exerciseKey"]>,
+    exerciseStore: Function as PropType<
+      ExerciseTreeRoute["props"]["exerciseStore"]
+    >
   },
   setup(props: ExerciseTreeRoute["props"]) {
-    const route = useRoute();
-    console.log(props, route);
+    const ExerciseStore = props.exerciseStore();
 
     const clock = useClock();
 
     return {
+      ExerciseStore,
       clock,
       APP_ROUTES
     };

@@ -1,13 +1,20 @@
 import { createExperienceStore } from "@/stores/createExperienceStore";
 
-type ExerciseUnlockCondition = {
-  level: number;
+type ExerciseLockCondition = {
+  openAtLevel: number;
   store: ReturnType<typeof createExperienceStore>;
 };
+
+export enum ExerciseType {
+  TIME = "time",
+  REPETITION = "repetition"
+}
 
 export type Exercise = {
   key: string;
   name: string;
   path: string;
-  unlockConditions: ExerciseUnlockCondition[];
+  experiencePerInteraction: number;
+  type: ExerciseType;
+  lockConditions: ExerciseLockCondition[];
 };
