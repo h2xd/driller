@@ -18,22 +18,22 @@ type ExerciseTreeRouterGeneratedPaths = {
 type RawRouteOptions = Partial<RouteRecordRaw> &
   Pick<RouteRecordRaw, "path" | "name" | "component">;
 
-type TreeRouteMeta = {
+type TreeRouteProps = {
   treeKey: ExerciseTreeRouterOptions["key"];
   treeStore: ExerciseTreeRouterOptions["store"];
 };
 
 export type TreeRoute = RawRouteOptions & {
-  meta: TreeRouteMeta & { exercisePaths: ExerciseTreeCollection[] };
+  props: TreeRouteProps & { exercisePaths: ExerciseTreeCollection[] };
 };
 
-type ExerciseTreeRouteMeta = TreeRouteMeta & {
+type ExerciseTreeRouteProps = TreeRouteProps & {
   treePath: ExerciseTreeRouterOptions["path"];
   exerciseKey: Exercise["key"];
 };
 
-type ExerciseTreeRoute = RawRouteOptions & {
-  meta: ExerciseTreeRouteMeta;
+export type ExerciseTreeRoute = RawRouteOptions & {
+  props: ExerciseTreeRouteProps;
 };
 
 export type ExerciseTreeCollection = {
@@ -84,7 +84,7 @@ export class ExerciseTreeRouter {
     return {
       path: this.treePath,
       name: `App/${this.options.name}`,
-      meta: {
+      props: {
         treeKey: this.options.key,
         treeStore: this.options.store,
         exercisePaths: this.exerciseRouteCollection
@@ -100,7 +100,7 @@ export class ExerciseTreeRouter {
     return {
       path: this.treePath + route.path,
       name: `App/${this.options.name}/${route.name}`,
-      meta: {
+      props: {
         treeKey: this.options.key,
         treePath: this.treePath,
         treeStore: this.options.store,

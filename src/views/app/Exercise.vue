@@ -1,10 +1,8 @@
 <template>
   <AppLayout>
-    <h1>{{ $route.meta.exerciseKey }}</h1>
+    <h1>{{ $props.exerciseKey }}</h1>
 
-    <router-link :to="$route.meta.treePath"
-      >Go to {{ $route.meta.treeKey }}</router-link
-    >
+    <router-link :to="$props.treePath">Go to {{ $props.treeKey }}</router-link>
 
     <pre>
       {{ $route.path }}
@@ -34,23 +32,28 @@
 </template>
 
 <script lang="ts">
+import { PropType } from "vue";
+import { useRoute } from "vue-router";
+
 import { APP_ROUTES } from "@/router";
+import { useClock } from "@/utils/useClock";
+import { ExerciseTreeRoute } from "@/router/ExerciseTreeRouter";
 
 import AppLayout from "@/layouts/App.vue";
-import { useRoute } from "vue-router";
-import { useClock } from "@/utils/useClock";
 
 export default {
   components: {
     AppLayout
   },
   props: {
-    lets: String
+    treeKey: String as PropType<ExerciseTreeRoute["props"]["treeKey"]>,
+    treeStore: Function as PropType<ExerciseTreeRoute["props"]["treeStore"]>,
+    treePath: String as PropType<ExerciseTreeRoute["props"]["treePath"]>,
+    exerciseKey: String as PropType<ExerciseTreeRoute["props"]["exerciseKey"]>
   },
-  setup() {
+  setup(props: ExerciseTreeRoute["props"]) {
     const route = useRoute();
-    const groupStore = route.meta.treeStore();
-    console.log(groupStore);
+    console.log(props, route);
 
     const clock = useClock();
 
