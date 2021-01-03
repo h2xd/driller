@@ -7,7 +7,7 @@
     Exercises in {{ $route.meta.treeKey }}:
     <ul>
       <li v-for="exercise in $route.meta.exercisePaths" :key="exercise.key">
-        <router-link :to="exercise.route.path">{{ exercise.key }}</router-link>
+        <ExerciseCard :exercise="exercise" />
       </li>
     </ul>
   </AppLayout>
@@ -17,10 +17,12 @@
 import { APP_ROUTES } from "@/router";
 
 import AppLayout from "@/layouts/App.vue";
+import ExerciseCard from "@/components/exercise/Card.vue";
 
 export default {
   components: {
-    AppLayout
+    AppLayout,
+    ExerciseCard
   },
   setup() {
     return {

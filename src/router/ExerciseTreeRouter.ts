@@ -10,20 +10,41 @@ type ExerciseTreeRouterOptions = {
   store: ReturnType<typeof createExperienceStore>;
 };
 
-type ExerciseTreeRoute = {
-  key: Exercise["key"];
-  route: RouteRecordRaw;
-};
-
 type ExerciseTreeRouterGeneratedPaths = {
   [index: string]: Exercise["key"];
   home: string;
 };
 
+type RawRouteOptions = Partial<RouteRecordRaw> &
+  Pick<RouteRecordRaw, "path" | "name" | "component">;
+
+type TreeRouteMeta = {
+  treeKey: ExerciseTreeRouterOptions["key"];
+  treeStore: ExerciseTreeRouterOptions["store"];
+};
+
+export type TreeRoute = RawRouteOptions & {
+  meta: TreeRouteMeta & { exercisePaths: ExerciseTreeCollection[] };
+};
+
+type ExerciseTreeRouteMeta = TreeRouteMeta & {
+  treePath: ExerciseTreeRouterOptions["path"];
+  exerciseKey: Exercise["key"];
+};
+
+type ExerciseTreeRoute = RawRouteOptions & {
+  meta: ExerciseTreeRouteMeta;
+};
+
+export type ExerciseTreeCollection = {
+  key: Exercise["key"];
+  route: ExerciseTreeRoute;
+};
+
 export class ExerciseTreeRouter {
   private readonly treePath: string;
 
-  private exerciseRouteCollection: ExerciseTreeRoute[] = [];
+  private exerciseRouteCollection: ExerciseTreeCollection[] = [];
 
   constructor(private options: ExerciseTreeRouterOptions) {
     this.treePath = ExerciseTreeRouter.createAppPrependedPath(options.path);
@@ -56,10 +77,10 @@ export class ExerciseTreeRouter {
     return [
       this.createTreeRoute(),
       ...this.exerciseRouteCollection.map(collection => collection.route)
-    ];
+    ] as RouteRecordRaw[];
   }
 
-  private createTreeRoute() {
+  private createTreeRoute(): TreeRoute {
     return {
       path: this.treePath,
       name: `App/${this.options.name}`,
@@ -75,7 +96,7 @@ export class ExerciseTreeRouter {
     };
   }
 
-  private createExerciseRoute(route: Exercise): RouteRecordRaw {
+  private createExerciseRoute(route: Exercise): ExerciseTreeRoute {
     return {
       path: this.treePath + route.path,
       name: `App/${this.options.name}/${route.name}`,
