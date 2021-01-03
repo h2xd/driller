@@ -3,14 +3,21 @@
 </template>
 
 <script lang="ts">
-import { useGlobalExperienceStore } from "@/stores/globalExperienceStore";
 import { writeToLocalStorage } from "@/utils/localStorage";
+import { useGlobalExperienceStore } from "@/stores/globalExperienceStore";
+import { usePushUpExperienceStore } from "@/trees/pushup/store";
 
 export default {
   setup() {
     const ExperienceStore = useGlobalExperienceStore();
+    const PushUpStore = usePushUpExperienceStore();
 
     ExperienceStore.$subscribe(({ storeName }, state) => {
+      console.log(storeName, state);
+      writeToLocalStorage(storeName, state);
+    });
+
+    PushUpStore.$subscribe(({ storeName }, state) => {
       console.log(storeName, state);
       writeToLocalStorage(storeName, state);
     });

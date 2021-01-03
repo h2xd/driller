@@ -10,26 +10,36 @@
 
     <div>Unlocked: {{ !ExerciseStore.locked }}</div>
 
-    <h2>Clock</h2>
-    Running: {{ clock.isRunning }}<br />
-    Time: {{ clock.duration }}ms<br />
+    <div v-if="!ExerciseStore.locked">
+      <div>Amount you did: {{ ExerciseStore.value }}</div>
 
-    <div>
-      <button @click="clock.start()">Start</button>
-    </div>
-    <div v-if="clock.isRunning">
-      <button @click="clock.round()">Round</button><br />
-      <button @click="clock.stop()">Stop</button>
-    </div>
-    <button v-if="!clock.isRunning && !clock.isClean" @click="clock.clear()">
-      Clear
-    </button>
+      <button @click="ExerciseStore.increase(1)">One More (+)</button>
+      <button @click="ExerciseStore.decrease(1)">One Less (-)</button>
 
-    <ul v-if="!!clock.rounds.length">
-      <li v-for="(round, index) in clock.rounds" :key="round.timestamp">
-        {{ index + 1 }}. - {{ round.duration }}ms
-      </li>
-    </ul>
+      <button @click="ExerciseStore.checkout()">Save to store</button>
+
+      <h2>Clock</h2>
+      Running: {{ clock.isRunning }}<br />
+      Time: {{ clock.duration }}ms<br />
+
+      <div>
+        <button @click="clock.start()">Start</button>
+      </div>
+      <div v-if="clock.isRunning">
+        <button @click="clock.round()">Round</button><br />
+        <button @click="clock.stop()">Stop</button>
+      </div>
+      <button v-if="!clock.isRunning && !clock.isClean" @click="clock.clear()">
+        Clear
+      </button>
+
+      <ul v-if="!!clock.rounds.length">
+        <li v-for="(round, index) in clock.rounds" :key="round.timestamp">
+          {{ index + 1 }}. - {{ round.duration }}ms
+        </li>
+      </ul>
+    </div>
+    <div>{{ $props.exerciseKey }} is locked get more buffed</div>
   </AppLayout>
 </template>
 

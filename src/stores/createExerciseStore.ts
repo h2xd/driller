@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 
 import { loadFromLocalStorage } from "@/utils/localStorage";
-import { Exercise } from "@/@types/exercise";
+import { Exercise, ExerciseType } from "@/@types/exercise";
 
-type ExerciseState = {
+export type ExerciseState = {
   value: number;
 };
 
@@ -14,7 +14,13 @@ type ExerciseStoreOptions = {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function createExerciseStore(options: ExerciseStoreOptions) {
-  const { defaultState, id, lockConditions } = options;
+  const {
+    defaultState,
+    id,
+    lockConditions,
+    type,
+    experiencePerInteraction
+  } = options;
 
   return defineStore({
     id,
@@ -25,9 +31,43 @@ export function createExerciseStore(options: ExerciseStoreOptions) {
           .map(condition => {
             const store = condition.store();
 
-            return store.level >= condition.openAtLevel;
+            return store.experience.level >= condition.openAtLevel;
           })
           .some(conditionIsMet => !conditionIsMet);
+      }
+    },
+    actions: {
+      increase(amount: number) {
+        if (amount > 0) {
+          this.value += amount;
+        }
+      },
+      decrease(amount: number) {
+        if (amount > 0) {
+          this.value -= amount;
+
+          if (this.value < 0) {
+            this.value = 0;
+          }
+        }
+      },
+      checkout() {
+        if (this.value === 0) {
+          return;
+        }
+
+        lockConditions.forEach(condition => {
+          const store = condition.store();
+          let amount = 0;
+
+          if (type === ExerciseType.REPETITION) {
+            amount = this.value * experiencePerInteraction;
+          } else {
+            console.info("TODO: implement time handling");
+          }
+
+          store.checkoutExperiencePoints(amount);
+        });
       }
     }
   });

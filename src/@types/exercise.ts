@@ -1,8 +1,8 @@
-import { createExperienceStore } from "@/stores/createExperienceStore";
+import { createTreeStore } from "@/stores/createTreeStore";
 
 type ExerciseLockCondition = {
   openAtLevel: number;
-  store: ReturnType<typeof createExperienceStore>;
+  store: ReturnType<typeof createTreeStore>;
 };
 
 export enum ExerciseType {

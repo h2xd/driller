@@ -10,23 +10,23 @@
       <tbody>
         <tr>
           <th>Level</th>
-          <td>{{ ExerciseExperienceStore.level }}</td>
+          <td>{{ xp.level }}</td>
         </tr>
         <tr>
           <th>XP</th>
-          <td>{{ ExerciseExperienceStore.total }}</td>
+          <td>{{ xp.total }}</td>
         </tr>
         <tr>
           <th>Next Level</th>
-          <td>{{ ExerciseExperienceStore.nextLevel }}</td>
+          <td>{{ xp.nextLevel }}</td>
         </tr>
         <tr>
           <th>Next Level At</th>
-          <td>{{ ExerciseExperienceStore.nextLevelAt }}</td>
+          <td>{{ xp.nextLevelAt }}</td>
         </tr>
         <tr>
           <th>Remaining</th>
-          <td>{{ ExerciseExperienceStore.remainingToNextLevel }}</td>
+          <td>{{ xp.remainingToNextLevel }}</td>
         </tr>
       </tbody>
     </table>
@@ -62,7 +62,7 @@ export default {
     const ExerciseExperienceStore = props.treeStore();
 
     return {
-      ExerciseExperienceStore,
+      xp: ExerciseExperienceStore.experience,
       APP_ROUTES
     };
   }

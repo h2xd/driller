@@ -1,14 +1,14 @@
 import { RouteRecordRaw } from "vue-router";
 import { APP_PATH } from "@/router/paths";
-import { createExperienceStore } from "@/stores/createExperienceStore";
 import { Exercise } from "@/@types/exercise";
 import { createExerciseStore } from "@/stores/createExerciseStore";
+import { createTreeStore } from "@/stores/createTreeStore";
 
 type ExerciseTreeRouterOptions = {
   key: string;
   path: string;
   name: string;
-  store: ReturnType<typeof createExperienceStore>;
+  store: ReturnType<typeof createTreeStore>;
   storeKey: string;
 };
 

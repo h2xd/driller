@@ -1,8 +1,5 @@
 import { ExerciseTreeRouter } from "@/router/ExerciseTreeRouter";
-import {
-  PUSHUP_STORE_KEY,
-  usePushUpExperienceStore
-} from "@/trees/pushup/store";
+import { PUSHUP_STORE_KEY, usePushUpTreeStore } from "@/trees/pushup/store";
 import { ClassicPushUp } from "@/trees/pushup/exercises/classic";
 import { DeltaPushUp } from "@/trees/pushup/exercises/delta";
 import { SpinxPushUp } from "@/trees/pushup/exercises/spinx";
@@ -12,7 +9,7 @@ const PushUpRouter = new ExerciseTreeRouter({
   path: "/pushup",
   name: "PushUp",
   storeKey: PUSHUP_STORE_KEY,
-  store: usePushUpExperienceStore
+  store: usePushUpTreeStore
 });
 
 PushUpRouter.register(ClassicPushUp);

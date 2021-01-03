@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 import { loadFromLocalStorage } from "@/utils/localStorage";
 
-type ExperienceState = {
+export type ExperienceState = {
   total: number;
 };
 
