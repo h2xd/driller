@@ -1,5 +1,5 @@
 import { ExerciseTreeRouter } from "@/router/ExerciseTreeRouter";
-import { usePushUpExperienceStore } from "@/exercises/pushup/store";
+import { usePushUpExperienceStore } from "./store";
 
 const PushUpRouter = new ExerciseTreeRouter({
   key: "pushup",
