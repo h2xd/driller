@@ -22,16 +22,14 @@ function roundLevelExperience(
 ) {
   const { levelProgression, baseDemandPerLevel } = options;
 
-  return Math.floor(
-    Math.abs(baseDemandPerLevel * (level - 1) * levelProgression)
-  );
+  return Math.floor(Math.abs(baseDemandPerLevel * level * levelProgression));
 }
 
 function evaluateLevel(
   total: number,
   options: ExperienceStoreLevelOptions
 ): number {
-  let level = 0;
+  let level = 1;
 
   while (total >= roundLevelExperience(level, options)) {
     level += 1;
