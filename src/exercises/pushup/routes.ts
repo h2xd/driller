@@ -1,32 +1,15 @@
-import { RouteRecordRaw } from "vue-router";
-import { createExerciseGroupRouteFactory } from "@/router/exercises";
+import { ExerciseTreeRouter } from "@/router/ExerciseTreeRouter";
 import { usePushUpExperienceStore } from "@/exercises/pushup/store";
 
-const {
-  groupPath,
-  createGroupRoute,
-  createPath,
-  createRoute
-} = createExerciseGroupRouteFactory(
-  "/pushup",
-  "PushUp",
-  usePushUpExperienceStore
-);
+const PushUpRouter = new ExerciseTreeRouter({
+  path: "/pushup",
+  name: "PushUp",
+  store: usePushUpExperienceStore
+});
 
-export const internalPushUpPaths = {
-  classic: createPath("/classic"),
-  delta: createPath("/delta"),
-  spinx: createPath("/spinx")
-} as const;
+PushUpRouter.register({ key: "classic", name: "Classic", path: "/classic" });
+PushUpRouter.register({ key: "delta", name: "Delta", path: "/delta" });
+PushUpRouter.register({ key: "spinx", name: "Spinx", path: "/spinx" });
 
-export const PUSHUP_PATHS = {
-  ...groupPath,
-  ...internalPushUpPaths
-} as const;
-
-export const pushUpRouter: Array<RouteRecordRaw> = [
-  createGroupRoute(internalPushUpPaths),
-  createRoute(PUSHUP_PATHS.classic, "Classic"),
-  createRoute(PUSHUP_PATHS.delta, "Delta"),
-  createRoute(PUSHUP_PATHS.spinx, "Spinx")
-];
+export const PUSHUP_PATHS = PushUpRouter.exportPaths();
+export const pushUpRouter = PushUpRouter.exportRoutes();
