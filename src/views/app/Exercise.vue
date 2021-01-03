@@ -2,11 +2,10 @@
   <AppLayout>
     <h1>Some Exercise</h1>
 
-    <router-link :to="$route.meta.groupPath">Go to group</router-link>
+    <router-link :to="$route.meta.treePath">Go to group</router-link>
 
     <pre>
       {{ $route.path }}
-      {{ $route.meta.groupPath }}
     </pre>
 
     <h2>Clock</h2>
@@ -48,7 +47,7 @@ export default {
   },
   setup() {
     const route = useRoute();
-    const groupStore = route.meta.groupStore();
+    const groupStore = route.meta.treeStore();
     console.log(groupStore);
 
     const clock = useClock();
