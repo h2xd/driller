@@ -1,21 +1,22 @@
 import { RouteRecordRaw } from "vue-router";
 import { APP_PATH } from "@/router/paths";
 import { createExperienceStore } from "@/stores/createExperienceStore";
-import { ExerciseRoute } from "@/@types/exerciseRoute";
+import { Exercise } from "@/@types/exercise";
 
 type ExerciseTreeRouterOptions = {
+  key: string;
   path: string;
   name: string;
   store: ReturnType<typeof createExperienceStore>;
 };
 
 type ExerciseTreeRoute = {
-  key: ExerciseRoute["key"];
+  key: Exercise["key"];
   route: RouteRecordRaw;
 };
 
 type ExerciseTreeRouterGeneratedPaths = {
-  [index: string]: ExerciseRoute["key"];
+  [index: string]: Exercise["key"];
   home: string;
 };
 
@@ -32,10 +33,10 @@ export class ExerciseTreeRouter {
     return APP_PATH + path;
   }
 
-  public register(route: ExerciseRoute): void {
+  public register(exercise: Exercise): void {
     this.exerciseRouteCollection.push({
-      key: route.key,
-      route: this.createExerciseRoute(route)
+      key: exercise.key,
+      route: this.createExerciseRoute(exercise)
     });
   }
 
@@ -63,7 +64,8 @@ export class ExerciseTreeRouter {
       path: this.treePath,
       name: `App/${this.options.name}`,
       meta: {
-        store: this.options.store,
+        treeKey: this.options.key,
+        treeStore: this.options.store,
         exercisePaths: this.exerciseRouteCollection
       },
       component: () =>
@@ -73,13 +75,15 @@ export class ExerciseTreeRouter {
     };
   }
 
-  private createExerciseRoute(route: ExerciseRoute): RouteRecordRaw {
+  private createExerciseRoute(route: Exercise): RouteRecordRaw {
     return {
       path: this.treePath + route.path,
       name: `App/${this.options.name}/${route.name}`,
       meta: {
+        treeKey: this.options.key,
         treePath: this.treePath,
-        treeStore: this.options.store
+        treeStore: this.options.store,
+        exerciseKey: route.key
       },
       component: () =>
         import(

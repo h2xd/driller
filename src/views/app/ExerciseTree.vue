@@ -4,20 +4,12 @@
 
     <router-link :to="APP_ROUTES.home">Go to home</router-link>
 
-    Exercises in this group:
+    Exercises in {{ $route.meta.treeKey }}:
     <ul>
-      <li
-        v-for="(exercise, exerciseKey) in $route.meta.exercises"
-        :key="exercise"
-      >
-        <router-link :to="exercise">{{ exerciseKey }}</router-link>
+      <li v-for="exercise in $route.meta.exercisePaths" :key="exercise.key">
+        <router-link :to="exercise.route.path">{{ exercise.key }}</router-link>
       </li>
     </ul>
-
-    <pre>
-      {{ $route.path }}
-      {{ $route.meta }}
-    </pre>
   </AppLayout>
 </template>
 

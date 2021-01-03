@@ -2,6 +2,7 @@ import { ExerciseTreeRouter } from "@/router/ExerciseTreeRouter";
 import { usePushUpExperienceStore } from "@/exercises/pushup/store";
 
 const PushUpRouter = new ExerciseTreeRouter({
+  key: "pushup",
   path: "/pushup",
   name: "PushUp",
   store: usePushUpExperienceStore

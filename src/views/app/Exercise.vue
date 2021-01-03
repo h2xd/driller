@@ -1,8 +1,10 @@
 <template>
   <AppLayout>
-    <h1>Some Exercise</h1>
+    <h1>{{ $route.meta.exerciseKey }}</h1>
 
-    <router-link :to="$route.meta.treePath">Go to group</router-link>
+    <router-link :to="$route.meta.treePath"
+      >Go to {{ $route.meta.treeKey }}</router-link
+    >
 
     <pre>
       {{ $route.path }}
