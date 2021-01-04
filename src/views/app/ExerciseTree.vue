@@ -4,20 +4,39 @@
 
     <router-link :to="APP_ROUTES.home">Go to home</router-link>
 
-    Exercises in this group:
+    <h2>Stats</h2>
+
+    <table>
+      <tbody>
+        <tr>
+          <th>Level</th>
+          <td>{{ xp.level }}</td>
+        </tr>
+        <tr>
+          <th>XP</th>
+          <td>{{ xp.total }}</td>
+        </tr>
+        <tr>
+          <th>Next Level</th>
+          <td>{{ xp.nextLevel }}</td>
+        </tr>
+        <tr>
+          <th>Next Level At</th>
+          <td>{{ xp.nextLevelAt }}</td>
+        </tr>
+        <tr>
+          <th>Remaining</th>
+          <td>{{ xp.remainingToNextLevel }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    Exercises in {{ $props.treeKey }}:
     <ul>
-      <li
-        v-for="(exercise, exerciseKey) in $route.meta.exercises"
-        :key="exercise"
-      >
-        <router-link :to="exercise">{{ exerciseKey }}</router-link>
+      <li v-for="exercise in $props.exercisePaths" :key="exercise.key">
+        <ExerciseCard :exercise="exercise" />
       </li>
     </ul>
-
-    <pre>
-      {{ $route.path }}
-      {{ $route.meta }}
-    </pre>
   </AppLayout>
 </template>
 
@@ -25,13 +44,25 @@
 import { APP_ROUTES } from "@/router";
 
 import AppLayout from "@/layouts/App.vue";
+import ExerciseCard from "@/components/exercise/Card.vue";
+import { PropType } from "vue";
+import { TreeRoute } from "@/router/ExerciseTreeRouter";
 
 export default {
   components: {
-    AppLayout
+    AppLayout,
+    ExerciseCard
   },
-  setup() {
+  props: {
+    treeKey: String as PropType<TreeRoute["props"]["treeKey"]>,
+    treeStore: Function as PropType<TreeRoute["props"]["treeStore"]>,
+    exercisePaths: Array as PropType<TreeRoute["props"]["exercisePaths"]>
+  },
+  setup(props: TreeRoute["props"]) {
+    const ExerciseExperienceStore = props.treeStore();
+
     return {
+      xp: ExerciseExperienceStore.experience,
       APP_ROUTES
     };
   }

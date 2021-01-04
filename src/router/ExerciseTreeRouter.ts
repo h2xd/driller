@@ -1,28 +1,53 @@
 import { RouteRecordRaw } from "vue-router";
 import { APP_PATH } from "@/router/paths";
-import { createExperienceStore } from "@/stores/createExperienceStore";
-import { ExerciseRoute } from "@/@types/exerciseRoute";
+import { Exercise } from "@/@types/exercise";
+import { createExerciseStore } from "@/stores/createExerciseStore";
+import { createTreeStore } from "@/stores/createTreeStore";
 
 type ExerciseTreeRouterOptions = {
+  key: string;
   path: string;
   name: string;
-  store: ReturnType<typeof createExperienceStore>;
-};
-
-type ExerciseTreeRoute = {
-  key: ExerciseRoute["key"];
-  route: RouteRecordRaw;
+  store: ReturnType<typeof createTreeStore>;
+  storeKey: string;
 };
 
 type ExerciseTreeRouterGeneratedPaths = {
-  [index: string]: ExerciseRoute["key"];
+  [index: string]: Exercise["key"];
   home: string;
+};
+
+type RawRouteOptions = Partial<RouteRecordRaw> &
+  Pick<RouteRecordRaw, "path" | "name" | "component">;
+
+type TreeRouteProps = {
+  treeKey: ExerciseTreeRouterOptions["key"];
+  treeStore: ExerciseTreeRouterOptions["store"];
+};
+
+export type TreeRoute = RawRouteOptions & {
+  props: TreeRouteProps & { exercisePaths: ExerciseTreeCollection[] };
+};
+
+type ExerciseTreeRouteProps = TreeRouteProps & {
+  treePath: ExerciseTreeRouterOptions["path"];
+  exerciseKey: Exercise["key"];
+  exerciseStore: ReturnType<typeof createExerciseStore>;
+};
+
+export type ExerciseTreeRoute = RawRouteOptions & {
+  props: ExerciseTreeRouteProps;
+};
+
+export type ExerciseTreeCollection = {
+  key: Exercise["key"];
+  route: ExerciseTreeRoute;
 };
 
 export class ExerciseTreeRouter {
   private readonly treePath: string;
 
-  private exerciseRouteCollection: ExerciseTreeRoute[] = [];
+  private exerciseRouteCollection: ExerciseTreeCollection[] = [];
 
   constructor(private options: ExerciseTreeRouterOptions) {
     this.treePath = ExerciseTreeRouter.createAppPrependedPath(options.path);
@@ -32,10 +57,10 @@ export class ExerciseTreeRouter {
     return APP_PATH + path;
   }
 
-  public register(route: ExerciseRoute): void {
+  public register(exercise: Exercise): void {
     this.exerciseRouteCollection.push({
-      key: route.key,
-      route: this.createExerciseRoute(route)
+      key: exercise.key,
+      route: this.createExerciseRoute(exercise)
     });
   }
 
@@ -55,15 +80,16 @@ export class ExerciseTreeRouter {
     return [
       this.createTreeRoute(),
       ...this.exerciseRouteCollection.map(collection => collection.route)
-    ];
+    ] as RouteRecordRaw[];
   }
 
-  private createTreeRoute() {
+  private createTreeRoute(): TreeRoute {
     return {
       path: this.treePath,
       name: `App/${this.options.name}`,
-      meta: {
-        store: this.options.store,
+      props: {
+        treeKey: this.options.key,
+        treeStore: this.options.store,
         exercisePaths: this.exerciseRouteCollection
       },
       component: () =>
@@ -73,13 +99,20 @@ export class ExerciseTreeRouter {
     };
   }
 
-  private createExerciseRoute(route: ExerciseRoute): RouteRecordRaw {
+  private createExerciseRoute(exercise: Exercise): ExerciseTreeRoute {
     return {
-      path: this.treePath + route.path,
-      name: `App/${this.options.name}/${route.name}`,
-      meta: {
+      path: this.treePath + exercise.path,
+      name: `App/${this.options.name}/${exercise.name}`,
+      props: {
+        treeKey: this.options.key,
         treePath: this.treePath,
-        treeStore: this.options.store
+        treeStore: this.options.store,
+        exerciseKey: exercise.key,
+        exerciseStore: createExerciseStore({
+          id: `${this.options.storeKey}:${exercise.key}`,
+          defaultState: { value: 0 },
+          ...exercise
+        })
       },
       component: () =>
         import(

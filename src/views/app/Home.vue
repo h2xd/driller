@@ -31,12 +31,7 @@
 
     <ul>
       <li v-for="(group, groupName) in APP_ROUTES.exercises" :key="groupName">
-        <div>{{ groupName }}</div>
-        <ul>
-          <li v-for="(exercise, exerciseKey) in group" :key="exercise">
-            <router-link :to="exercise">{{ exerciseKey }}</router-link>
-          </li>
-        </ul>
+        <router-link :to="group.home">{{ groupName }}</router-link>
       </li>
     </ul>
 
