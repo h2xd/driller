@@ -28,6 +28,7 @@
         </tr>
       </tbody>
     </table>
+    <XpBar :progress="ExperienceStore.progress"/>
 
     <ul>
       <li v-for="(group, groupName) in APP_ROUTES.exercises" :key="groupName">
@@ -45,10 +46,12 @@
 import AppLayout from "@/layouts/App.vue";
 import { useGlobalExperienceStore } from "@/stores/globalExperienceStore";
 import { APP_ROUTES } from "@/router";
+import XpBar from "@/components/base/XpBar.vue";
 
 export default {
   components: {
-    AppLayout
+    AppLayout,
+    XpBar
   },
   setup() {
     const ExperienceStore = useGlobalExperienceStore();

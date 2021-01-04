@@ -52,7 +52,19 @@ export function createExperienceStore(options: ExperienceStoreOptions) {
     state: () => loadFromLocalStorage<ExperienceState>(id, defaultState),
     getters: {
       remainingToNextLevel() {
-        return roundLevelExperience(this.level, utilOptions) - this.total;
+        return this.nextLevelAt - this.total;
+      },
+      requiredExperienceToNextLevel() {
+        return this.nextLevelAt - this.previousLevelAt
+      },
+      experienceProgressInCurrentLevel() {
+        return this.total - this.previousLevelAt
+      },
+      progress() {
+        return 100 / this.requiredExperienceToNextLevel * this.experienceProgressInCurrentLevel / 100
+      },
+      previousLevelAt() {
+        return roundLevelExperience(this.level - 1, utilOptions);
       },
       nextLevelAt() {
         return roundLevelExperience(this.level, utilOptions);
