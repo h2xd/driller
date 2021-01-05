@@ -30,7 +30,7 @@
         </tr>
       </tbody>
     </table>
-    <XpBar :progress="xp.progress"/>
+    <XpBar :progress="xp.progress" />
 
     Exercises in {{ $props.treeKey }}:
     <ul>
@@ -48,7 +48,7 @@ import AppLayout from "@/layouts/App.vue";
 import ExerciseCard from "@/components/exercise/Card.vue";
 import { PropType } from "vue";
 import { TreeRoute } from "@/router/ExerciseTreeRouter";
-import XpBar from "@/components/base/XpBar.vue"
+import XpBar from "@/components/base/XpBar.vue";
 
 export default {
   components: {

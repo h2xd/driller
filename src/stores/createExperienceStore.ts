@@ -55,13 +55,17 @@ export function createExperienceStore(options: ExperienceStoreOptions) {
         return this.nextLevelAt - this.total;
       },
       requiredExperienceToNextLevel() {
-        return this.nextLevelAt - this.previousLevelAt
+        return this.nextLevelAt - this.previousLevelAt;
       },
       experienceProgressInCurrentLevel() {
-        return this.total - this.previousLevelAt
+        return this.total - this.previousLevelAt;
       },
       progress() {
-        return 100 / this.requiredExperienceToNextLevel * this.experienceProgressInCurrentLevel / 100
+        return (
+          ((100 / this.requiredExperienceToNextLevel) *
+            this.experienceProgressInCurrentLevel) /
+          100
+        );
       },
       previousLevelAt() {
         return roundLevelExperience(this.level - 1, utilOptions);
