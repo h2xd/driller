@@ -6,9 +6,13 @@
 import { writeToLocalStorage } from "@/utils/localStorage";
 import { useGlobalExperienceStore } from "@/stores/globalExperienceStore";
 import { usePushUpExperienceStore } from "@/trees/pushup/store";
+import { useI18n } from "vue-i18n";
+import { watch } from "vue";
 
 export default {
   setup() {
+    const $i18n = useI18n();
+
     const ExperienceStore = useGlobalExperienceStore();
     const PushUpStore = usePushUpExperienceStore();
 
@@ -20,6 +24,10 @@ export default {
     PushUpStore.$subscribe(({ storeName }, state) => {
       console.log(storeName, state);
       writeToLocalStorage(storeName, state);
+    });
+
+    watch($i18n.locale, value => {
+      writeToLocalStorage("locale", { value });
     });
   }
 };

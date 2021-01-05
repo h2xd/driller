@@ -1,6 +1,17 @@
 <template>
   <AppLayout>
-    <h1>App Home</h1>
+    <h1>App Home {{ $t("hello") }}</h1>
+
+    <div class="locale-changer">
+      <select v-model="$i18n.locale">
+        <option
+          v-for="locale in $i18n.availableLocales"
+          :key="`locale-${locale}`"
+          :value="locale"
+          >{{ locale }}</option
+        >
+      </select>
+    </div>
 
     <h2>Stats</h2>
 
@@ -28,7 +39,7 @@
         </tr>
       </tbody>
     </table>
-    <XpBar :progress="ExperienceStore.progress"/>
+    <XpBar :progress="ExperienceStore.progress" />
 
     <ul>
       <li v-for="(group, groupName) in APP_ROUTES.exercises" :key="groupName">
