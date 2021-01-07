@@ -1,0 +1,30 @@
+$breakpointsDesktopLarge: 1200px;
+$breakpointsDesktop: 1000px;
+$breakpointsTablet: 800px;
+$breakpointsPhone: 515px;
+
+@mixin desktopLarge {
+  @media screen and (min-device-width: $breakpointsDesktopLarge) {
+    @content
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-device-width: $breakpointsDesktop) {
+    @content
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-device-width: $breakpointsTablet) {
+    @content
+  }
+}
+
+@mixin phone {
+  @media screen and (min-device-width: $breakpointsPhone) {
+    @content
+  }
+}
+
+

@@ -1,0 +1,18 @@
+$classicThemeSpacingXXL: 1.75rem;
+$classicThemeSpacingXL: 1.5rem;
+$classicThemeSpacingL: 1.25rem;
+$classicThemeSpacingM: 1rem;
+$classicThemeSpacingS: 0.75rem;
+$classicThemeSpacingXS: 0.5rem;
+$classicThemeSpacingXXS: 0.25rem;
+
+
+%classicThemeSpacingsClass {
+  --theme-spacing-xxl: #{$classicThemeSpacingXXL};
+  --theme-spacing-xl: #{$classicThemeSpacingXL};
+  --theme-spacing-l: #{$classicThemeSpacingL};
+  --theme-spacing-m: #{$classicThemeSpacingM};
+  --theme-spacing-s: #{$classicThemeSpacingS};
+  --theme-spacing-xs: #{$classicThemeSpacingXS};
+  --theme-spacing-xxs: #{$classicThemeSpacingXXS};
+}

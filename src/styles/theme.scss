@@ -1,0 +1,8 @@
+@import "./themes/colors/classic";
+@import "./themes/spacings/classic";
+@import "./vars";
+
+:root {
+  @extend %classicThemeClass;
+  @extend %classicThemeSpacingsClass;
+}

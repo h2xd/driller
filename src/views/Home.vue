@@ -1,14 +1,15 @@
 <template>
-  <GlobalNavigation />
-  <h1>Homepage</h1>
+  <DefaultLayout>
+    <h1>Homepage</h1>
+  </DefaultLayout>
 </template>
 
 <script lang="ts">
-import GlobalNavigation from "@/components/navigation/Global.vue";
+import DefaultLayout from "@/layouts/Default.vue";
 
 export default {
   components: {
-    GlobalNavigation
+    DefaultLayout
   }
 };
 </script>
