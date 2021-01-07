@@ -1,0 +1,32 @@
+@import "./utils/breakpoints";
+
+//
+// Bind css-custom-properties to scss variables,
+// for faster useage and autocompletion
+//
+
+// --- Bind background colors ---
+$themeColorBackground100: var(--theme-color-background-100);
+$themeColorBackground200: var(--theme-color-background-200);
+$themeColorBackground300: var(--theme-color-background-300);
+$themeColorBackground400: var(--theme-color-background-400);
+$themeColorBackground500: var(--theme-color-background-500);
+
+// --- Bind accent colors ---
+$themeColorAccent100: var(--theme-color-accent-100);
+$themeColorAccent200: var(--theme-color-accent-200);
+$themeColorAccent300: var(--theme-color-accent-300);
+$themeColorAccent400: var(--theme-color-accent-400);
+$themeColorAccent500: var(--theme-color-accent-500);
+
+$themeColorBackground: var(--theme-color-background);
+$themeColorText: var(--theme-color-text);
+
+// --- Spacings ---
+$themeSpacingXXL: var(--theme-spacing-xxl);
+$themeSpacingXL: var(--theme-spacing-xl);
+$themeSpacingL: var(--theme-spacing-l);
+$themeSpacingM: var(--theme-spacing-m);
+$themeSpacingS: var(--theme-spacing-s);
+$themeSpacingXS: var(--theme-spacing-xs);
+$themeSpacingXXS: var(--theme-spacing-xxs);

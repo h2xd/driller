@@ -20,15 +20,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../styles/vars";
+
 .nav {
-  padding: 30px;
+  padding: $themeSpacingM;
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: $themeColorAccent100;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: $themeColorAccent500;
     }
   }
 }

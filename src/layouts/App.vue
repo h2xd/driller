@@ -13,4 +13,14 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+@import "../styles/vars.scss";
+
+body {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  background-color: $themeColorBackground;
+  color: $themeColorText;
+
+  padding: $themeSpacingM;
+}
+</style>
