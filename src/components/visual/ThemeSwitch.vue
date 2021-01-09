@@ -13,11 +13,12 @@
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  setup() {
+  setup(_, { emit }) {
     const theme = ref("dark");
 
     function handleThemeSwitch(newTheme: string) {
       theme.value = newTheme;
+      emit("switch", theme.value);
     }
 
     function isThemeSelector(selectedTheme: string) {
