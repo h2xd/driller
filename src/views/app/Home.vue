@@ -1,7 +1,7 @@
 <template>
   <AppLayout>
     <h1>App Home {{ $t("hello") }}</h1>
-
+    <ThemeSwitch />
     <div class="locale-changer">
       <select v-model="$i18n.locale">
         <option
@@ -58,11 +58,13 @@ import AppLayout from "@/layouts/App.vue";
 import { useGlobalExperienceStore } from "@/stores/globalExperienceStore";
 import { APP_ROUTES } from "@/router";
 import XpBar from "@/components/base/XpBar.vue";
+import ThemeSwitch from "@/components/visual/ThemeSwitch.vue";
 
 export default {
   components: {
     AppLayout,
-    XpBar
+    XpBar,
+    ThemeSwitch
   },
   setup() {
     const ExperienceStore = useGlobalExperienceStore();
