@@ -1,0 +1,33 @@
+/* --- Bind background colors --- */
+$lightThemeColorBackground100: #c4c4c4;
+$lightThemeColorBackground200: #d4d4d4;
+$lightThemeColorBackground300: #dddddd;
+$lightThemeColorBackground400: #ececec;
+$lightThemeColorBackground500: #ffffff;
+
+/* --- Bind accent colors --- */
+$lightThemeColorAccent100: #ff6d00;
+$lightThemeColorAccent200: #ff7900;
+$lightThemeColorAccent300: #ff8500;
+$lightThemeColorAccent400: #ff9100;
+$lightThemeColorAccent500: #ff9e00;
+
+$lightThemeColorBackground: $lightThemeColorBackground100;
+$lightThemeColorText: #000000;
+
+%lightThemeColorClass {
+  --theme-color-background-100: #{$lightThemeColorBackground100};
+  --theme-color-background-200: #{$lightThemeColorBackground200};
+  --theme-color-background-300: #{$lightThemeColorBackground300};
+  --theme-color-background-400: #{$lightThemeColorBackground400};
+  --theme-color-background-500: #{$lightThemeColorBackground500};
+
+  --theme-color-accent-100: #{$lightThemeColorAccent100};
+  --theme-color-accent-200: #{$lightThemeColorAccent200};
+  --theme-color-accent-300: #{$lightThemeColorAccent300};
+  --theme-color-accent-400: #{$lightThemeColorAccent400};
+  --theme-color-accent-500: #{$lightThemeColorAccent500};
+
+  --theme-color-background: #{$lightThemeColorBackground};
+  --theme-color-text: #{$lightThemeColorText};
+}
