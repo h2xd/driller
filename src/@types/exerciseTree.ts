@@ -5,16 +5,25 @@ type ExerciseLockCondition = {
   store: ReturnType<typeof createTreeStore>;
 };
 
+export enum ExerciseTree {
+  PUSHUP = "pushup"
+}
+
 export enum ExerciseType {
   TIME = "time",
   REPETITION = "repetition"
 }
 
-export type Exercise = {
-  key: string;
+export type ExerciseData = {
   name: string;
-  path: string;
   experiencePerInteraction: number;
   type: ExerciseType;
   lockConditions: ExerciseLockCondition[];
+};
+
+export type ExerciseHistory = {
+  hlc: string;
+  interactions: number;
+  experience: number;
+  exercise: ExerciseTree;
 };

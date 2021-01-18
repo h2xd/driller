@@ -1,7 +1,12 @@
 import { defineStore } from "pinia";
 
 import { loadFromLocalStorage } from "@/utils/localStorage";
-import { Exercise, ExerciseType } from "@/@types/exercise";
+import {
+  ExerciseTree,
+  ExerciseData,
+  ExerciseType
+} from "../@types/exerciseTree";
+import { useHistoryStore } from "@/stores/historyStore";
 
 export type ExerciseState = {
   value: number;
@@ -10,7 +15,8 @@ export type ExerciseState = {
 type ExerciseStoreOptions = {
   id: string;
   defaultState: ExerciseState;
-} & Pick<Exercise, "experiencePerInteraction" | "lockConditions" | "type">;
+  exercise: ExerciseTree;
+} & Pick<ExerciseData, "experiencePerInteraction" | "lockConditions" | "type">;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function createExerciseStore(options: ExerciseStoreOptions) {
@@ -56,15 +62,24 @@ export function createExerciseStore(options: ExerciseStoreOptions) {
           return;
         }
 
+        let amount = 0;
+
+        if (type === ExerciseType.REPETITION) {
+          amount = this.value * experiencePerInteraction;
+        } else {
+          console.info("TODO: implement time handling");
+        }
+
+        const history = useHistoryStore();
+
+        history.logExercise({
+          experience: amount,
+          exercise: options.exercise,
+          interactions: this.value
+        });
+
         lockConditions.forEach(condition => {
           const store = condition.store();
-          let amount = 0;
-
-          if (type === ExerciseType.REPETITION) {
-            amount = this.value * experiencePerInteraction;
-          } else {
-            console.info("TODO: implement time handling");
-          }
 
           store.checkoutExperiencePoints(amount);
         });

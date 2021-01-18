@@ -45,7 +45,6 @@
 
 <script lang="ts">
 import { PropType } from "vue";
-import { useRoute } from "vue-router";
 
 import { APP_ROUTES } from "@/router";
 import { useClock } from "@/utils/useClock";

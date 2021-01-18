@@ -1,6 +1,5 @@
 import { RouteRecordRaw } from "vue-router";
-import { APP_PATH } from "@/router/paths";
-import { Exercise } from "@/@types/exercise";
+import { ExerciseTree, ExerciseData } from "@/@types/exerciseTree";
 import { createExerciseStore } from "@/stores/createExerciseStore";
 import { createTreeStore } from "@/stores/createTreeStore";
 
@@ -8,13 +7,9 @@ type ExerciseTreeRouterOptions = {
   key: string;
   path: string;
   name: string;
+  exercise: ExerciseTree;
   store: ReturnType<typeof createTreeStore>;
   storeKey: string;
-};
-
-type ExerciseTreeRouterGeneratedPaths = {
-  [index: string]: Exercise["key"];
-  home: string;
 };
 
 type RawRouteOptions = Partial<RouteRecordRaw> &
@@ -31,7 +26,7 @@ export type TreeRoute = RawRouteOptions & {
 
 type ExerciseTreeRouteProps = TreeRouteProps & {
   treePath: ExerciseTreeRouterOptions["path"];
-  exerciseKey: Exercise["key"];
+  exerciseKey: string;
   exerciseStore: ReturnType<typeof createExerciseStore>;
 };
 
@@ -40,7 +35,7 @@ export type ExerciseTreeRoute = RawRouteOptions & {
 };
 
 export type ExerciseTreeCollection = {
-  key: Exercise["key"];
+  key: string;
   route: ExerciseTreeRoute;
 };
 
@@ -50,30 +45,17 @@ export class ExerciseTreeRouter {
   private exerciseRouteCollection: ExerciseTreeCollection[] = [];
 
   constructor(private options: ExerciseTreeRouterOptions) {
-    this.treePath = ExerciseTreeRouter.createAppPrependedPath(options.path);
+    this.treePath = options.path;
   }
 
-  static createAppPrependedPath(path: string): string {
-    return APP_PATH + path;
-  }
-
-  public register(exercise: Exercise): void {
+  public register(
+    route: { key: string; path: string },
+    exercise: ExerciseData
+  ): void {
     this.exerciseRouteCollection.push({
-      key: exercise.key,
-      route: this.createExerciseRoute(exercise)
+      key: route.key,
+      route: this.createExerciseRoute(route, exercise)
     });
-  }
-
-  public exportPaths(): ExerciseTreeRouterGeneratedPaths {
-    const generatedPathRecords: ExerciseTreeRouterGeneratedPaths = {
-      home: this.treePath
-    };
-
-    this.exerciseRouteCollection.forEach(collection => {
-      generatedPathRecords[collection.key] = collection.route.path;
-    });
-
-    return generatedPathRecords;
   }
 
   public exportRoutes(): RouteRecordRaw[] {
@@ -99,18 +81,22 @@ export class ExerciseTreeRouter {
     };
   }
 
-  private createExerciseRoute(exercise: Exercise): ExerciseTreeRoute {
+  private createExerciseRoute(
+    route: { key: string; path: string },
+    exercise: ExerciseData
+  ): ExerciseTreeRoute {
     return {
-      path: this.treePath + exercise.path,
+      path: route.path,
       name: `App/${this.options.name}/${exercise.name}`,
       props: {
         treeKey: this.options.key,
         treePath: this.treePath,
         treeStore: this.options.store,
-        exerciseKey: exercise.key,
+        exerciseKey: route.key,
         exerciseStore: createExerciseStore({
-          id: `${this.options.storeKey}:${exercise.key}`,
+          id: `${this.options.storeKey}:${route.key}`,
           defaultState: { value: 0 },
+          exercise: this.options.exercise,
           ...exercise
         })
       },

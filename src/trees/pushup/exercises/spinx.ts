@@ -1,10 +1,8 @@
-import { Exercise, ExerciseType } from "@/@types/exercise";
+import { ExerciseData, ExerciseType } from "../../../@types/exerciseTree";
 import { usePushUpTreeStore } from "@/trees/pushup/store";
 
-export const SpinxPushUp: Exercise = {
-  key: "spinx",
+export const SpinxPushUp: ExerciseData = {
   name: "Spinx",
-  path: "/spinx",
   experiencePerInteraction: 25,
   type: ExerciseType.REPETITION,
   lockConditions: [{ store: usePushUpTreeStore, openAtLevel: 3 }]

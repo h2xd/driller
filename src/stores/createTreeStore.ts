@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 
 import { createExperienceStore } from "@/stores/createExperienceStore";
-import { useGlobalExperienceStore } from "@/stores/globalExperienceStore";
 
 type TreeStoreOptions = {
   id: string;
@@ -22,9 +21,6 @@ export function createTreeStore(options: TreeStoreOptions) {
     actions: {
       checkoutExperiencePoints(amount: number) {
         this.experience.addToLevel(amount);
-        const GlobalExperienceStore = useGlobalExperienceStore();
-
-        GlobalExperienceStore.addToLevel(amount);
       }
     }
   });
