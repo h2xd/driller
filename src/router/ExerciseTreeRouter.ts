@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 
-import { ExerciseTree, Exercise } from "@/@types/exercise";
+import { ExerciseTree, Exercise, ExerciseIndex } from "@/@types/exercise";
 import { getExercisePath, getExerciseTreePath } from "@/utils/extractPath";
 
 type ExerciseTreeRouterOptions = {
@@ -31,6 +31,22 @@ export class ExerciseTreeRouter {
     });
 
     return paths;
+  }
+
+  public exportIndex(): ExerciseIndex {
+    const exerciesMap: ExerciseIndex["value"]["exercises"] = {};
+
+    this.options.exercises.forEach(exercise => {
+      exerciesMap[exercise.id] = exercise;
+    });
+
+    return {
+      key: this.options.exerciseTree.id,
+      value: {
+        tree: this.options.exerciseTree,
+        exercises: exerciesMap
+      }
+    };
   }
 
   private createTreeRoute(): RouteRecordRaw {

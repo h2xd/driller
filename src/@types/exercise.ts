@@ -30,9 +30,10 @@ type ExerciseUnlockCondition = {
   store: ReturnType<typeof createTreeStore>;
 };
 
-export type ExerciseHistory = {
-  hlc: string;
-  interactions: number;
-  experience: number;
-  exercise: ExerciseData;
+export type ExerciseIndex = {
+  key: ExerciseTree["id"];
+  value: {
+    tree: ExerciseTree;
+    exercises: Record<Exercise["id"], Exercise>;
+  };
 };

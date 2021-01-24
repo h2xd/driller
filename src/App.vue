@@ -5,7 +5,7 @@
 <script lang="ts">
 import { writeToLocalStorage } from "@/utils/localStorage";
 import { useGlobalExperienceStore } from "@/stores/globalExperienceStore";
-import { useHistoryStore } from "@/stores/historyStore";
+import { packHistoryStore, useHistoryStore } from "@/stores/historyStore";
 import { usePushUpExperienceStore } from "@/trees/pushup/store";
 import { useI18n } from "vue-i18n";
 import { watch } from "vue";
@@ -25,7 +25,8 @@ export default {
 
     HistoryStore.$subscribe(({ storeName }, state) => {
       console.log(storeName, state);
-      writeToLocalStorage(storeName, state);
+
+      writeToLocalStorage(storeName, packHistoryStore(state));
     });
 
     PushUpStore.$subscribe(({ storeName }, state) => {

@@ -1,6 +1,7 @@
 import { Exercise, ExerciseData, ExerciseType } from "@/@types/exercise";
-import { PushUpTree, usePushUpTreeStore } from "@/trees/pushup/store";
 import { createExerciseStore } from "@/stores/createExerciseStore";
+import { PushUpTree } from "../tree";
+import { usePushUpTreeStore } from "../store";
 
 export const DeltaPushUpData: ExerciseData = {
   id: "delta",
