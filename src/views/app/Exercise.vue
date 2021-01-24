@@ -1,8 +1,6 @@
 <template>
   <AppLayout>
-    <h1>{{ $props.exerciseKey }}</h1>
-
-    <router-link :to="$props.treePath">Go to {{ $props.treeKey }}</router-link>
+    <h1>{{ $props.exercise.id }}</h1>
 
     <pre>
       {{ $route.path }}
@@ -39,35 +37,35 @@
         </li>
       </ul>
     </div>
-    <div>{{ $props.exerciseKey }} is locked get more buffed</div>
+    <div>{{ $props.exercise.id }} is locked get more buffed</div>
   </AppLayout>
 </template>
 
 <script lang="ts">
-import { PropType } from "vue";
-import { useRoute } from "vue-router";
+import { PropType, defineComponent } from "vue";
 
+import { Exercise, ExerciseTree } from "@/@types/exercise";
 import { APP_ROUTES } from "@/router";
 import { useClock } from "@/utils/useClock";
-import { ExerciseTreeRoute } from "@/router/ExerciseTreeRouter";
 
 import AppLayout from "@/layouts/App.vue";
 
-export default {
+export default defineComponent({
   components: {
     AppLayout
   },
   props: {
-    treeKey: String as PropType<ExerciseTreeRoute["props"]["treeKey"]>,
-    treeStore: Function as PropType<ExerciseTreeRoute["props"]["treeStore"]>,
-    treePath: String as PropType<ExerciseTreeRoute["props"]["treePath"]>,
-    exerciseKey: String as PropType<ExerciseTreeRoute["props"]["exerciseKey"]>,
-    exerciseStore: Function as PropType<
-      ExerciseTreeRoute["props"]["exerciseStore"]
-    >
+    tree: {
+      required: true,
+      type: Object as PropType<ExerciseTree>
+    },
+    exercise: {
+      required: true,
+      type: Object as PropType<Exercise>
+    }
   },
-  setup(props: ExerciseTreeRoute["props"]) {
-    const ExerciseStore = props.exerciseStore();
+  setup(props) {
+    const ExerciseStore = props.exercise.store();
 
     const clock = useClock();
 
@@ -77,5 +75,5 @@ export default {
       APP_ROUTES
     };
   }
-};
+});
 </script>

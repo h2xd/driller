@@ -50,6 +50,12 @@
     <button @click.prevent="ExperienceStore.addToLevel(20)">Add 20</button>
     <button @click.prevent="ExperienceStore.addToLevel(200)">Add 200</button>
     <button @click.prevent="ExperienceStore.addToLevel(2000)">Add 2000</button>
+
+    <ul>
+      <li v-for="entry in HistoryStore.history" :key="entry.hlc">
+        {{ entry.experience }} | {{ entry.interactions }} | {{ entry.hlc }}
+      </li>
+    </ul>
   </AppLayout>
 </template>
 
@@ -57,6 +63,7 @@
 import { APP_ROUTES } from "@/router";
 import { useGlobalExperienceStore } from "@/stores/globalExperienceStore";
 import { useSettingsStore } from "@/stores/settingsStore";
+import { useHistoryStore } from "@/stores/historyStore";
 
 import AppLayout from "@/layouts/App.vue";
 import XpBar from "@/components/base/XpBar.vue";
@@ -71,6 +78,7 @@ export default {
   setup() {
     const ExperienceStore = useGlobalExperienceStore();
     const SettingsStore = useSettingsStore();
+    const HistoryStore = useHistoryStore();
 
     function handleThemeSwitch(newTheme: string) {
       console.log(newTheme);
@@ -79,6 +87,7 @@ export default {
 
     return {
       APP_ROUTES,
+      HistoryStore,
       ExperienceStore,
       handleThemeSwitch
     };

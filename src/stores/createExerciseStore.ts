@@ -1,33 +1,27 @@
 import { defineStore } from "pinia";
 
 import { loadFromLocalStorage } from "@/utils/localStorage";
-import { Exercise, ExerciseType } from "@/@types/exercise";
+import { ExerciseData, ExerciseType } from "@/@types/exercise";
+import { useHistoryStore } from "@/stores/historyStore";
 
 export type ExerciseState = {
   value: number;
 };
 
 type ExerciseStoreOptions = {
-  id: string;
-  defaultState: ExerciseState;
-} & Pick<Exercise, "experiencePerInteraction" | "lockConditions" | "type">;
+  exercise: ExerciseData;
+};
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function createExerciseStore(options: ExerciseStoreOptions) {
-  const {
-    defaultState,
-    id,
-    lockConditions,
-    type,
-    experiencePerInteraction
-  } = options;
+  const { exercise } = options;
 
   return defineStore({
-    id,
-    state: () => loadFromLocalStorage<ExerciseState>(id, defaultState),
+    id: exercise.id,
+    state: () => loadFromLocalStorage<ExerciseState>(exercise.id, { value: 0 }),
     getters: {
       locked() {
-        return lockConditions
+        return exercise.unlockConditions
           .map(condition => {
             const store = condition.store();
 
@@ -56,15 +50,24 @@ export function createExerciseStore(options: ExerciseStoreOptions) {
           return;
         }
 
-        lockConditions.forEach(condition => {
-          const store = condition.store();
-          let amount = 0;
+        let amount = 0;
 
-          if (type === ExerciseType.REPETITION) {
-            amount = this.value * experiencePerInteraction;
-          } else {
-            console.info("TODO: implement time handling");
-          }
+        if (exercise.type === ExerciseType.REPETITION) {
+          amount = this.value * exercise.experiencePerInteraction;
+        } else {
+          console.info("TODO: implement time handling");
+        }
+
+        const history = useHistoryStore();
+
+        history.logExercise({
+          experience: amount,
+          exercise: options.exercise,
+          interactions: this.value
+        });
+
+        exercise.unlockConditions.forEach(condition => {
+          const store = condition.store();
 
           store.checkoutExperiencePoints(amount);
         });

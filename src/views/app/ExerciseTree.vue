@@ -32,9 +32,8 @@
     </table>
     <XpBar :progress="xp.progress" />
 
-    Exercises in {{ $props.treeKey }}:
     <ul>
-      <li v-for="exercise in $props.exercisePaths" :key="exercise.key">
+      <li v-for="exercise in $props.exercises" :key="exercise.id">
         <ExerciseCard :exercise="exercise" />
       </li>
     </ul>
@@ -42,32 +41,38 @@
 </template>
 
 <script lang="ts">
+import { PropType, defineComponent } from "vue";
+
+import { Exercise, ExerciseTree } from "@/@types/exercise";
 import { APP_ROUTES } from "@/router";
 
 import AppLayout from "@/layouts/App.vue";
 import ExerciseCard from "@/components/exercise/Card.vue";
-import { PropType } from "vue";
-import { TreeRoute } from "@/router/ExerciseTreeRouter";
 import XpBar from "@/components/base/XpBar.vue";
 
-export default {
+export default defineComponent({
   components: {
     AppLayout,
     ExerciseCard,
     XpBar
   },
   props: {
-    treeKey: String as PropType<TreeRoute["props"]["treeKey"]>,
-    treeStore: Function as PropType<TreeRoute["props"]["treeStore"]>,
-    exercisePaths: Array as PropType<TreeRoute["props"]["exercisePaths"]>
+    tree: {
+      required: true,
+      type: Object as PropType<ExerciseTree>
+    },
+    exercises: {
+      required: true,
+      type: Array as PropType<Exercise[]>
+    }
   },
-  setup(props: TreeRoute["props"]) {
-    const ExerciseExperienceStore = props.treeStore();
+  setup(props) {
+    const ExerciseExperienceStore = props.tree.store();
 
     return {
       xp: ExerciseExperienceStore.experience,
       APP_ROUTES
     };
   }
-};
+});
 </script>

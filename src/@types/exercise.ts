@@ -1,20 +1,39 @@
 import { createTreeStore } from "@/stores/createTreeStore";
+import { createExerciseStore } from "@/stores/createExerciseStore";
 
-type ExerciseLockCondition = {
-  openAtLevel: number;
+export type ExerciseTree = {
+  id: string;
+  path: string;
   store: ReturnType<typeof createTreeStore>;
 };
+
+export type ExerciseData = {
+  id: string;
+  path: string;
+  experiencePerInteraction: number;
+  type: ExerciseType;
+  tree: ExerciseTree;
+  unlockConditions: ExerciseUnlockCondition[];
+};
+
+export type Exercise = {
+  store: ReturnType<typeof createExerciseStore>;
+} & ExerciseData;
 
 export enum ExerciseType {
   TIME = "time",
   REPETITION = "repetition"
 }
 
-export type Exercise = {
-  key: string;
-  name: string;
-  path: string;
-  experiencePerInteraction: number;
-  type: ExerciseType;
-  lockConditions: ExerciseLockCondition[];
+type ExerciseUnlockCondition = {
+  openAtLevel: number;
+  store: ReturnType<typeof createTreeStore>;
+};
+
+export type ExerciseIndex = {
+  key: ExerciseTree["id"];
+  value: {
+    tree: ExerciseTree;
+    exercises: Record<Exercise["id"], Exercise>;
+  };
 };
