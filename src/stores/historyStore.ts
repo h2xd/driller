@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 import { loadFromLocalStorage } from "@/utils/localStorage";
-import { ExerciseTree, ExerciseHistory } from "../@types/exerciseTree";
+import { ExerciseData, ExerciseHistory } from "@/@types/exercise";
 import { initialize, increment, pack, HLC, unpack } from "@/utils/hlc";
 import { uuidv4 } from "@/utils/uuidv4";
 import { useGlobalExperienceStore } from "@/stores/globalExperienceStore";
@@ -33,7 +33,7 @@ export const useHistoryStore = defineStore({
   getters: {},
   actions: {
     logExercise(options: {
-      exercise: ExerciseTree;
+      exercise: ExerciseData;
       interactions: number;
       experience: number;
     }) {

@@ -1,11 +1,7 @@
 import { defineStore } from "pinia";
 
 import { loadFromLocalStorage } from "@/utils/localStorage";
-import {
-  ExerciseTree,
-  ExerciseData,
-  ExerciseType
-} from "../@types/exerciseTree";
+import { ExerciseData, ExerciseType } from "@/@types/exercise";
 import { useHistoryStore } from "@/stores/historyStore";
 
 export type ExerciseState = {
@@ -13,27 +9,19 @@ export type ExerciseState = {
 };
 
 type ExerciseStoreOptions = {
-  id: string;
-  defaultState: ExerciseState;
-  exercise: ExerciseTree;
-} & Pick<ExerciseData, "experiencePerInteraction" | "lockConditions" | "type">;
+  exercise: ExerciseData;
+};
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function createExerciseStore(options: ExerciseStoreOptions) {
-  const {
-    defaultState,
-    id,
-    lockConditions,
-    type,
-    experiencePerInteraction
-  } = options;
+  const { exercise } = options;
 
   return defineStore({
-    id,
-    state: () => loadFromLocalStorage<ExerciseState>(id, defaultState),
+    id: exercise.id,
+    state: () => loadFromLocalStorage<ExerciseState>(exercise.id, { value: 0 }),
     getters: {
       locked() {
-        return lockConditions
+        return exercise.unlockConditions
           .map(condition => {
             const store = condition.store();
 
@@ -64,8 +52,8 @@ export function createExerciseStore(options: ExerciseStoreOptions) {
 
         let amount = 0;
 
-        if (type === ExerciseType.REPETITION) {
-          amount = this.value * experiencePerInteraction;
+        if (exercise.type === ExerciseType.REPETITION) {
+          amount = this.value * exercise.experiencePerInteraction;
         } else {
           console.info("TODO: implement time handling");
         }
@@ -78,7 +66,7 @@ export function createExerciseStore(options: ExerciseStoreOptions) {
           interactions: this.value
         });
 
-        lockConditions.forEach(condition => {
+        exercise.unlockConditions.forEach(condition => {
           const store = condition.store();
 
           store.checkoutExperiencePoints(amount);

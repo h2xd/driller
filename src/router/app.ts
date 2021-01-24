@@ -1,12 +1,12 @@
 import { RouteRecordRaw } from "vue-router";
-import { PUSHUP_PATHS, pushUpRouter } from "@/trees/pushup/routes";
+import { pushUpPaths, pushUpRouter } from "@/trees/pushup/routes";
 import { APP_PATH } from "@/router/paths";
 
 export const APP_ROUTES = {
   home: `${APP_PATH}`,
   settings: `${APP_PATH}/settings`,
   exercises: {
-    pushup: PUSHUP_PATHS
+    pushup: pushUpPaths
   }
 } as const;
 

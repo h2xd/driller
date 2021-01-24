@@ -1,9 +1,21 @@
-import { ExerciseData, ExerciseType } from "../../../@types/exerciseTree";
-import { usePushUpTreeStore } from "@/trees/pushup/store";
+import { Exercise, ExerciseData, ExerciseType } from "@/@types/exercise";
+import { PushUpTree, usePushUpTreeStore } from "@/trees/pushup/store";
+import { createExerciseStore } from "@/stores/createExerciseStore";
 
-export const SpinxPushUp: ExerciseData = {
-  name: "Spinx",
+export const SpinxPushUpData: ExerciseData = {
+  id: "spinx",
+  path: "/spinx",
   experiencePerInteraction: 25,
   type: ExerciseType.REPETITION,
-  lockConditions: [{ store: usePushUpTreeStore, openAtLevel: 3 }]
+  tree: PushUpTree,
+  unlockConditions: [{ store: usePushUpTreeStore, openAtLevel: 3 }]
+};
+
+export const SpinxPushUpStore = createExerciseStore({
+  exercise: SpinxPushUpData
+});
+
+export const SpinxPushUp: Exercise = {
+  ...SpinxPushUpData,
+  store: SpinxPushUpStore
 };

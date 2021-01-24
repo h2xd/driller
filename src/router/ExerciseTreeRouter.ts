@@ -1,78 +1,45 @@
 import { RouteRecordRaw } from "vue-router";
-import { ExerciseTree, ExerciseData } from "@/@types/exerciseTree";
-import { createExerciseStore } from "@/stores/createExerciseStore";
-import { createTreeStore } from "@/stores/createTreeStore";
+
+import { ExerciseTree, Exercise } from "@/@types/exercise";
+import { getExercisePath, getExerciseTreePath } from "@/utils/extractPath";
 
 type ExerciseTreeRouterOptions = {
-  key: string;
-  path: string;
-  name: string;
-  exercise: ExerciseTree;
-  store: ReturnType<typeof createTreeStore>;
-  storeKey: string;
-};
-
-type RawRouteOptions = Partial<RouteRecordRaw> &
-  Pick<RouteRecordRaw, "path" | "name" | "component">;
-
-type TreeRouteProps = {
-  treeKey: ExerciseTreeRouterOptions["key"];
-  treeStore: ExerciseTreeRouterOptions["store"];
-};
-
-export type TreeRoute = RawRouteOptions & {
-  props: TreeRouteProps & { exercisePaths: ExerciseTreeCollection[] };
-};
-
-type ExerciseTreeRouteProps = TreeRouteProps & {
-  treePath: ExerciseTreeRouterOptions["path"];
-  exerciseKey: string;
-  exerciseStore: ReturnType<typeof createExerciseStore>;
-};
-
-export type ExerciseTreeRoute = RawRouteOptions & {
-  props: ExerciseTreeRouteProps;
-};
-
-export type ExerciseTreeCollection = {
-  key: string;
-  route: ExerciseTreeRoute;
+  exerciseTree: ExerciseTree;
+  exercises: Exercise[];
 };
 
 export class ExerciseTreeRouter {
-  private readonly treePath: string;
-
-  private exerciseRouteCollection: ExerciseTreeCollection[] = [];
+  private readonly exerciseRouteCollection: RouteRecordRaw[];
 
   constructor(private options: ExerciseTreeRouterOptions) {
-    this.treePath = options.path;
-  }
-
-  public register(
-    route: { key: string; path: string },
-    exercise: ExerciseData
-  ): void {
-    this.exerciseRouteCollection.push({
-      key: route.key,
-      route: this.createExerciseRoute(route, exercise)
-    });
+    this.exerciseRouteCollection = options.exercises.map(
+      this.createExerciseRoute.bind(this)
+    );
   }
 
   public exportRoutes(): RouteRecordRaw[] {
-    return [
-      this.createTreeRoute(),
-      ...this.exerciseRouteCollection.map(collection => collection.route)
-    ] as RouteRecordRaw[];
+    return [this.createTreeRoute(), ...this.exerciseRouteCollection];
   }
 
-  private createTreeRoute(): TreeRoute {
+  public exportPaths(): Record<Exercise["id"], Exercise["path"]> {
+    const paths: Record<Exercise["id"], Exercise["path"]> = {};
+
+    paths["home"] = getExerciseTreePath(this.options.exerciseTree);
+
+    this.options.exercises.forEach(exercise => {
+      paths[exercise.id] = getExercisePath(exercise);
+    });
+
+    return paths;
+  }
+
+  private createTreeRoute(): RouteRecordRaw {
     return {
-      path: this.treePath,
-      name: `App/${this.options.name}`,
+      path: getExerciseTreePath(this.options.exerciseTree),
+      name: `app/${this.options.exerciseTree.id}`,
       props: {
-        treeKey: this.options.key,
-        treeStore: this.options.store,
-        exercisePaths: this.exerciseRouteCollection
+        tree: this.options.exerciseTree,
+        exercises: [...this.options.exercises]
       },
       component: () =>
         import(
@@ -81,24 +48,13 @@ export class ExerciseTreeRouter {
     };
   }
 
-  private createExerciseRoute(
-    route: { key: string; path: string },
-    exercise: ExerciseData
-  ): ExerciseTreeRoute {
+  private createExerciseRoute(exercise: Exercise): RouteRecordRaw {
     return {
-      path: route.path,
-      name: `App/${this.options.name}/${exercise.name}`,
+      path: getExercisePath(exercise),
+      name: `app/${this.options.exerciseTree.id}/${exercise.id}`,
       props: {
-        treeKey: this.options.key,
-        treePath: this.treePath,
-        treeStore: this.options.store,
-        exerciseKey: route.key,
-        exerciseStore: createExerciseStore({
-          id: `${this.options.storeKey}:${route.key}`,
-          defaultState: { value: 0 },
-          exercise: this.options.exercise,
-          ...exercise
-        })
+        tree: this.options.exerciseTree,
+        exercise
       },
       component: () =>
         import(
