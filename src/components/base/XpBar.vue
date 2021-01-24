@@ -15,6 +15,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "../../styles/vars";
+
 %barBase {
   border-radius: 1rem;
   height: 1rem;
@@ -27,7 +29,7 @@ export default defineComponent({
 }
 .bar {
   position: absolute;
-  background-color: green;
+  background-color: $themeColorAccent100;
   width: calc(var(--bar-width) * 100%);
   transition: all 300ms ease-in-out;
   @extend %barBase;

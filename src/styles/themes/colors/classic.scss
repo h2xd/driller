@@ -1,9 +1,9 @@
 /* --- Bind background colors --- */
-$classicThemeColorBackground100: #240046;
-$classicThemeColorBackground200: #3c096c;
-$classicThemeColorBackground300: #5a189a;
-$classicThemeColorBackground400: #7b2cbf;
-$classicThemeColorBackground500: #9d4edd;
+$classicThemeColorBackground100: #001B29;
+$classicThemeColorBackground200: #00324A;
+$classicThemeColorBackground300: #00486C;
+$classicThemeColorBackground400: #005E8D;
+$classicThemeColorBackground500: #0075AF;
 
 /* --- Bind accent colors --- */
 $classicThemeColorAccent100: #ff6d00;
@@ -14,6 +14,7 @@ $classicThemeColorAccent500: #ff9e00;
 
 $classicThemeColorBackground: $classicThemeColorBackground100;
 $classicThemeColorText: #ffffff;
+$classicThemeColorLink: #b2e5ff;
 
 %classicThemeColorClass {
   --theme-color-background-100: #{$classicThemeColorBackground100};
@@ -30,4 +31,5 @@ $classicThemeColorText: #ffffff;
 
   --theme-color-background: #{$classicThemeColorBackground};
   --theme-color-text: #{$classicThemeColorText};
+  --theme-color-link: #{$classicThemeColorLink};
 }

@@ -1,5 +1,17 @@
 <template>
   <AppLayout>
+    <ThemeSwitch @switch="handleThemeSwitch" />
+    <div class="locale-changer">
+      <select v-model="$i18n.locale">
+        <option
+          v-for="locale in $i18n.availableLocales"
+          :key="`locale-${locale}`"
+          :value="locale"
+          >{{ locale }}</option
+        >
+      </select>
+    </div>
+
     <Input label="Age" name="age" v-model="age" />
     <Input label="Height" name="height" v-model="height" />
     <Input label="Weight" name="weight" v-model="weight" />
@@ -18,16 +30,19 @@ import { defineComponent, ref, computed } from "vue";
 
 import { Gender } from "@/@types/gender";
 import { calculateBMR } from "@/utils/calculateBMR";
+import { useSettingsStore } from "@/stores/settingsStore";
 
 import AppLayout from "@/layouts/App.vue";
 import Input from "@/components/base/Input.vue";
 import Radio from "@/components/base/Radio.vue";
+import ThemeSwitch from "@/components/visual/ThemeSwitch.vue";
 
 export default defineComponent({
   components: {
     AppLayout,
     Input,
-    Radio
+    Radio,
+    ThemeSwitch
   },
   setup() {
     const age = ref(1);
@@ -53,6 +68,13 @@ export default defineComponent({
       selectedGender.value = value;
     }
 
+    const SettingsStore = useSettingsStore();
+
+    function handleThemeSwitch(newTheme: string) {
+      console.log(newTheme);
+      SettingsStore.changeColorTheme(newTheme);
+    }
+
     return {
       age,
       height,
@@ -60,7 +82,8 @@ export default defineComponent({
       radioGroup,
       selectedGender,
       handleChange,
-      bmr
+      bmr,
+      handleThemeSwitch
     };
   }
 });
