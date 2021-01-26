@@ -30,7 +30,7 @@
         </tr>
       </tbody>
     </table>
-    <XpBar :progress="xp.progress" />
+    <ProgressBar :progress="xp.progress" />
 
     <ul>
       <li v-for="exercise in $props.exercises" :key="exercise.id">
@@ -48,13 +48,13 @@ import { APP_ROUTES } from "@/router";
 
 import AppLayout from "@/layouts/App.vue";
 import ExerciseCard from "@/components/exercise/Card.vue";
-import XpBar from "@/components/base/XpBar.vue";
+import ProgressBar from "@/components/base/ProgressBar.vue";
 
 export default defineComponent({
   components: {
     AppLayout,
     ExerciseCard,
-    XpBar
+    ProgressBar
   },
   props: {
     tree: {
