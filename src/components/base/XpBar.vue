@@ -23,7 +23,7 @@ export default defineComponent({
 }
 .container {
   width: 100%;
-  background-color: grey;
+  background-color: $themeColorBackground200;
   position: relative;
   @extend %barBase;
 }
