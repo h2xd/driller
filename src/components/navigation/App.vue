@@ -5,7 +5,7 @@
         <RouterLink class="link" :to="APP_ROUTES.home">
           <HomeIcon class="link-icon" />
           <span class="link-text">
-            Home
+            {{ $t("app.menu.home") }}
           </span>
         </RouterLink>
       </li>
@@ -13,7 +13,7 @@
         <RouterLink class="link" :to="APP_ROUTES.challenges">
           <TaskIcon class="link-icon" />
           <span class="link-text">
-            Challenges
+            {{ $t("app.menu.challenges") }}
           </span>
         </RouterLink>
       </li>
@@ -29,7 +29,7 @@
             <span class="level">{{ ExperienceStore.level }}</span>
           </div>
           <span class="link-text">
-            Profile
+            {{ $t("app.menu.profile") }}
           </span>
         </RouterLink>
       </li>
@@ -37,7 +37,7 @@
         <RouterLink class="link" :to="APP_ROUTES.friends">
           <FriendIcon class="link-icon" />
           <span class="link-text">
-            Friends
+            {{ $t("app.menu.friends") }}
           </span>
         </RouterLink>
       </li>
@@ -45,7 +45,7 @@
         <RouterLink class="link" :to="APP_ROUTES.settings">
           <SettingsIcon class="link-icon" />
           <span class="link-text">
-            Settings
+            {{ $t("app.menu.settings") }}
           </span>
         </RouterLink>
       </li>
