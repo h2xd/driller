@@ -19,11 +19,15 @@
       </li>
       <li class="entry profile">
         <RouterLink class="link" :to="APP_ROUTES.profile">
-          <RingProgressBar
-            :radius="24"
-            :progress="ExperienceStore.progress"
-            :max-circumference="270"
-          />
+          <div class="progress-ring">
+            <RingProgressBar
+              :radius="24"
+              :progress="ExperienceStore.progress"
+              :max-circumference="270"
+              :stroke="3"
+            />
+            <span class="level">{{ ExperienceStore.level }}</span>
+          </div>
           <span class="link-text">
             Profile
           </span>
@@ -107,7 +111,7 @@ $firstRowSize: 1rem;
   }
 }
 
-$activeColor: $themeColorAccent500;
+$activeColor: $themeColorAccent100;
 $inactiveColor: $themeColorBackground500;
 
 .link {
@@ -154,5 +158,30 @@ $inactiveColor: $themeColorBackground500;
   .link-text {
     grid-row: 3;
   }
+}
+
+%positionInRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.progress-ring {
+  grid-row: 1 / span 2;
+  line-height: 0;
+  position: relative;
+
+  svg {
+    transform: translate(-50%, -50%) rotate(225deg);
+    transform-origin: 50% 50%;
+    @extend %positionInRing;
+  }
+}
+
+.level {
+  color: $themeColorAccent100;
+  font-size: 0.8rem;
+  @extend %positionInRing;
 }
 </style>
