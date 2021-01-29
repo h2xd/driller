@@ -15,7 +15,7 @@
     "types": [
       "webpack-env",
       "jest",
-      "node"
+      "node",
     ],
     "paths": {
       "@/*": [
@@ -33,6 +33,7 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "@types/*.d.ts",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],

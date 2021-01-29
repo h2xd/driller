@@ -37,7 +37,7 @@
         </li>
       </ul>
     </div>
-    <div>{{ $props.exercise.id }} is locked get more buffed</div>
+    <div v-else>{{ $props.exercise.id }} is locked get more buffed</div>
   </AppLayout>
 </template>
 

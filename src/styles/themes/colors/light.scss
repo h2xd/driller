@@ -14,6 +14,7 @@ $lightThemeColorAccent500: #ff9e00;
 
 $lightThemeColorBackground: $lightThemeColorBackground100;
 $lightThemeColorText: #000000;
+$lightThemeColorLink: blue;
 
 %lightThemeColorClass {
   --theme-color-background-100: #{$lightThemeColorBackground100};
@@ -30,4 +31,5 @@ $lightThemeColorText: #000000;
 
   --theme-color-background: #{$lightThemeColorBackground};
   --theme-color-text: #{$lightThemeColorText};
+  --theme-color-link: #{$lightThemeColorLink};
 }

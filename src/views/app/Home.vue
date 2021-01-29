@@ -1,17 +1,6 @@
 <template>
   <AppLayout>
     <h1>App Home {{ $t("hello") }}</h1>
-    <ThemeSwitch @switch="handleThemeSwitch" />
-    <div class="locale-changer">
-      <select v-model="$i18n.locale">
-        <option
-          v-for="locale in $i18n.availableLocales"
-          :key="`locale-${locale}`"
-          :value="locale"
-          >{{ locale }}</option
-        >
-      </select>
-    </div>
 
     <h2>Stats</h2>
 
@@ -39,7 +28,7 @@
         </tr>
       </tbody>
     </table>
-    <XpBar :progress="ExperienceStore.progress" />
+    <ProgressBar :progress="ExperienceStore.progress" />
 
     <ul>
       <li v-for="(group, groupName) in APP_ROUTES.exercises" :key="groupName">
@@ -50,46 +39,27 @@
     <button @click.prevent="ExperienceStore.addToLevel(20)">Add 20</button>
     <button @click.prevent="ExperienceStore.addToLevel(200)">Add 200</button>
     <button @click.prevent="ExperienceStore.addToLevel(2000)">Add 2000</button>
-
-    <ul>
-      <li v-for="entry in HistoryStore.history" :key="entry.hlc">
-        {{ entry.experience }} | {{ entry.interactions }} | {{ entry.hlc }}
-      </li>
-    </ul>
   </AppLayout>
 </template>
 
 <script lang="ts">
 import { APP_ROUTES } from "@/router";
 import { useGlobalExperienceStore } from "@/stores/globalExperienceStore";
-import { useSettingsStore } from "@/stores/settingsStore";
-import { useHistoryStore } from "@/stores/historyStore";
 
 import AppLayout from "@/layouts/App.vue";
-import XpBar from "@/components/base/XpBar.vue";
-import ThemeSwitch from "@/components/visual/ThemeSwitch.vue";
+import ProgressBar from "@/components/base/ProgressBar.vue";
 
 export default {
   components: {
     AppLayout,
-    XpBar,
-    ThemeSwitch
+    ProgressBar
   },
   setup() {
     const ExperienceStore = useGlobalExperienceStore();
-    const SettingsStore = useSettingsStore();
-    const HistoryStore = useHistoryStore();
-
-    function handleThemeSwitch(newTheme: string) {
-      console.log(newTheme);
-      SettingsStore.changeColorTheme(newTheme);
-    }
 
     return {
       APP_ROUTES,
-      HistoryStore,
-      ExperienceStore,
-      handleThemeSwitch
+      ExperienceStore
     };
   }
 };

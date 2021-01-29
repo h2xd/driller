@@ -84,4 +84,16 @@ table {
   border-collapse: collapse;
   border-spacing: $themeSpacingS;
 }
+
+a {
+  color: $themeColorLink;
+
+  &:hover {
+    opacity: 0.75;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+}
 </style>
