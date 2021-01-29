@@ -6,6 +6,8 @@
       {{ $route.path }}
     </pre>
 
+    <ExperienceCard :store="ExerciseTreeStore.experience" />
+
     <div>Unlocked: {{ !ExerciseStore.locked }}</div>
 
     <div v-if="!ExerciseStore.locked">
@@ -49,10 +51,12 @@ import { APP_ROUTES } from "@/router";
 import { useClock } from "@/utils/useClock";
 
 import AppLayout from "@/layouts/App.vue";
+import ExperienceCard from "@/components/cards/Experience.vue";
 
 export default defineComponent({
   components: {
-    AppLayout
+    AppLayout,
+    ExperienceCard
   },
   props: {
     tree: {
@@ -66,10 +70,12 @@ export default defineComponent({
   },
   setup(props) {
     const ExerciseStore = props.exercise.store();
+    const ExerciseTreeStore = props.tree.store();
 
     const clock = useClock();
 
     return {
+      ExerciseTreeStore,
       ExerciseStore,
       clock,
       APP_ROUTES

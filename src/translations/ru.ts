@@ -8,6 +8,13 @@ export const russianTranslation = {
         profile: "Профиль",
         friends: "Друзья",
         settings: "Настройки"
+      },
+      experience: {
+        short: "ОП"
+      },
+      level: {
+        short: "Урн",
+        long: "Уровень"
       }
     }
   }

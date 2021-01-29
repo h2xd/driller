@@ -1,8 +1,10 @@
 @import "./themes/colors/classic";
 @import "./themes/spacings/classic";
+@import "./themes/font/classic";
 @import "./vars";
 
 :root {
   @extend %classicThemeColorClass;
   @extend %classicThemeSpacingsClass;
+  @extend %classicThemeFontSizeClass;
 }

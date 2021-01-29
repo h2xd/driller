@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="bar" :style="{ '--bar-width': $props.progress }"></div>
+  <div :class="$style.container">
+    <div :class="$style.bar" :style="{ '--bar-width': $props.progress }"></div>
   </div>
 </template>
 
@@ -14,19 +14,21 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 @import "../../styles/vars";
 
 %barBase {
   border-radius: 1rem;
   height: 1rem;
 }
+
 .container {
   width: 100%;
   background-color: $themeColorBackground200;
   position: relative;
   @extend %barBase;
 }
+
 .bar {
   position: absolute;
   background-color: $themeColorAccent100;
