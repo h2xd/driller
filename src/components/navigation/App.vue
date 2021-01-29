@@ -87,14 +87,40 @@ export default {
 <style lang="scss" scoped>
 @import "../../styles/vars";
 
-.container {
+$firstRowSize: 1rem;
+$activeColor: $themeColorAccent100;
+$inactiveColor: $themeColorBackground500;
+$gridPadding: 0.2rem;
+
+%borderExtension {
+  content: "";
+  display: block;
+  z-index: 0;
+  position: absolute;
+  top: $firstRowSize;
+  width: $gridPadding;
+  height: calc(100% - #{$firstRowSize});
+  background-color: $themeColorBackground;
 }
 
-$firstRowSize: 1rem;
+.container {
+  position: relative;
+  padding: 0 $gridPadding;
+
+  &::before {
+    left: 0;
+    @extend %borderExtension;
+  }
+
+  &::after {
+    right: 0;
+    @extend %borderExtension;
+  }
+}
 
 .navigation {
   display: grid;
-  grid-template-columns: repeat(2, minmax(10px, 1fr)) 1.5fr repeat(
+  grid-template-columns: repeat(2, minmax(10px, 1fr)) 1.2fr repeat(
       2,
       minmax(10px, 1fr)
     );
@@ -104,15 +130,14 @@ $firstRowSize: 1rem;
 .entry {
   grid-row: 2;
   background-color: $themeColorBackground;
+  position: relative;
+  z-index: 1;
 
   &.profile {
     grid-row: 1 / span 2;
     border-radius: $firstRowSize $firstRowSize 0 0;
   }
 }
-
-$activeColor: $themeColorAccent100;
-$inactiveColor: $themeColorBackground500;
 
 .link {
   display: grid;
@@ -143,7 +168,7 @@ $inactiveColor: $themeColorBackground500;
 
 .link-text {
   grid-row: 2;
-  font-size: 0.75rem;
+  font-size: 0.68rem;
 }
 
 .profile {

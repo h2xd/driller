@@ -7,7 +7,7 @@ export const germanTranslation = {
         challenges: "Aufgaben",
         profile: "Profil",
         friends: "Freunde",
-        settings: "Einstellung"
+        settings: "Einstellungen"
       }
     }
   }
