@@ -10,7 +10,8 @@
       </div>
 
       <div :class="$style.experiencePoints">
-        {{ store.remainingToNextLevel }} / {{ store.nextLevelAt }}
+        {{ store.remainingToNextLevel }} /
+        {{ store.requiredExperienceToNextLevel }}
         {{ $t("app.experience.short") }}
       </div>
     </div>

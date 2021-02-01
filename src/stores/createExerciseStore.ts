@@ -28,6 +28,15 @@ export function createExerciseStore(options: ExerciseStoreOptions) {
             return store.experience.level >= condition.openAtLevel;
           })
           .some(conditionIsMet => !conditionIsMet);
+      },
+      canCheckout() {
+        return this.value > 0;
+      },
+      canIncrease() {
+        return this.value > 1000;
+      },
+      canDecrease() {
+        return this.value > 0;
       }
     },
     actions: {
@@ -45,15 +54,15 @@ export function createExerciseStore(options: ExerciseStoreOptions) {
           }
         }
       },
-      checkout() {
-        if (this.value === 0) {
+      directCheckout(value: number) {
+        if (value === 0) {
           return;
         }
 
         let amount = 0;
 
         if (exercise.type === ExerciseType.REPETITION) {
-          amount = this.value * exercise.experiencePerInteraction;
+          amount = value * exercise.experiencePerInteraction;
         } else {
           console.info("TODO: implement time handling");
         }
@@ -71,6 +80,10 @@ export function createExerciseStore(options: ExerciseStoreOptions) {
 
           store.checkoutExperiencePoints(amount);
         });
+      },
+      checkout() {
+        this.directCheckout(this.value);
+        this.value = 0;
       }
     }
   });
