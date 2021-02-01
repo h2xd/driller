@@ -1,0 +1,17 @@
+$classicFontSizeXXL: 1.5rem;
+$classicFontSizeXL: 1.3rem;
+$classicFontSizeL: 1.1rem;
+$classicFontSizeM: 1rem;
+$classicFontSizeS: 0.9rem;
+$classicFontSizeXS: 0.8rem;
+$classicFontSizeXXS: 0.68rem;
+
+%classicThemeFontSizeClass {
+  --theme-font-size-xxl: #{$classicFontSizeXXL};
+  --theme-font-size-xl: #{$classicFontSizeXL};
+  --theme-font-size-l: #{$classicFontSizeL};
+  --theme-font-size-m: #{$classicFontSizeM};
+  --theme-font-size-s: #{$classicFontSizeS};
+  --theme-font-size-xs: #{$classicFontSizeXS};
+  --theme-font-size-xxs: #{$classicFontSizeXXS};
+}

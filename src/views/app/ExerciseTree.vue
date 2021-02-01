@@ -1,36 +1,9 @@
 <template>
+  <MinimalStickyProgressBar :store="ExerciseExperienceStore.experience" />
   <AppLayout>
     <h1>Some Exercise Group</h1>
 
     <router-link :to="APP_ROUTES.home">Go to home</router-link>
-
-    <h2>Stats</h2>
-
-    <table>
-      <tbody>
-        <tr>
-          <th>Level</th>
-          <td>{{ xp.level }}</td>
-        </tr>
-        <tr>
-          <th>XP</th>
-          <td>{{ xp.total }}</td>
-        </tr>
-        <tr>
-          <th>Next Level</th>
-          <td>{{ xp.nextLevel }}</td>
-        </tr>
-        <tr>
-          <th>Next Level At</th>
-          <td>{{ xp.nextLevelAt }}</td>
-        </tr>
-        <tr>
-          <th>Remaining</th>
-          <td>{{ xp.remainingToNextLevel }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <ProgressBar :progress="xp.progress" />
 
     <ul>
       <li v-for="exercise in $props.exercises" :key="exercise.id">
@@ -48,13 +21,13 @@ import { APP_ROUTES } from "@/router";
 
 import AppLayout from "@/layouts/App.vue";
 import ExerciseCard from "@/components/exercise/Card.vue";
-import ProgressBar from "@/components/base/ProgressBar.vue";
+import MinimalStickyProgressBar from "@/components/progress/MinimalStickyProgressBar.vue";
 
 export default defineComponent({
   components: {
     AppLayout,
     ExerciseCard,
-    ProgressBar
+    MinimalStickyProgressBar
   },
   props: {
     tree: {
@@ -69,8 +42,10 @@ export default defineComponent({
   setup(props) {
     const ExerciseExperienceStore = props.tree.store();
 
+    console.log(ExerciseExperienceStore);
+
     return {
-      xp: ExerciseExperienceStore.experience,
+      ExerciseExperienceStore,
       APP_ROUTES
     };
   }

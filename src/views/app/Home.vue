@@ -4,31 +4,7 @@
 
     <h2>Stats</h2>
 
-    <table>
-      <tbody>
-        <tr>
-          <th>Level</th>
-          <td>{{ ExperienceStore.level }}</td>
-        </tr>
-        <tr>
-          <th>XP</th>
-          <td>{{ ExperienceStore.total }}</td>
-        </tr>
-        <tr>
-          <th>Next Level</th>
-          <td>{{ ExperienceStore.nextLevel }}</td>
-        </tr>
-        <tr>
-          <th>Next Level At</th>
-          <td>{{ ExperienceStore.nextLevelAt }}</td>
-        </tr>
-        <tr>
-          <th>Remaining</th>
-          <td>{{ ExperienceStore.remainingToNextLevel }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <ProgressBar :progress="ExperienceStore.progress" />
+    <ExperienceCard :store="ExperienceStore" />
 
     <ul>
       <li v-for="(group, groupName) in APP_ROUTES.exercises" :key="groupName">
@@ -47,12 +23,12 @@ import { APP_ROUTES } from "@/router";
 import { useGlobalExperienceStore } from "@/stores/globalExperienceStore";
 
 import AppLayout from "@/layouts/App.vue";
-import ProgressBar from "@/components/base/ProgressBar.vue";
+import ExperienceCard from "@/components/cards/Experience.vue";
 
 export default {
   components: {
     AppLayout,
-    ProgressBar
+    ExperienceCard
   },
   setup() {
     const ExperienceStore = useGlobalExperienceStore();

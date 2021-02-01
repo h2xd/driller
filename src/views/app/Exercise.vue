@@ -1,4 +1,5 @@
 <template>
+  <MinimalStickyProgressBar :store="ExerciseTreeStore.experience" />
   <AppLayout>
     <h1>{{ $props.exercise.id }}</h1>
 
@@ -6,15 +7,30 @@
       {{ $route.path }}
     </pre>
 
+    <ExperienceCard :store="ExerciseTreeStore.experience" />
+
     <div>Unlocked: {{ !ExerciseStore.locked }}</div>
 
     <div v-if="!ExerciseStore.locked">
       <div>Amount you did: {{ ExerciseStore.value }}</div>
 
-      <button @click="ExerciseStore.increase(1)">One More (+)</button>
-      <button @click="ExerciseStore.decrease(1)">One Less (-)</button>
+      <Button @click="ExerciseStore.directCheckout(20)">I did 20!</Button>
+      <Button
+        :disabled="ExerciseStore.canIncrease"
+        @click="ExerciseStore.increase(1)"
+        >One More (+)</Button
+      >
+      <Button
+        :disabled="!ExerciseStore.canDecrease"
+        @click="ExerciseStore.decrease(1)"
+        >One Less (-)</Button
+      >
 
-      <button @click="ExerciseStore.checkout()">Save to store</button>
+      <Button
+        :disabled="!ExerciseStore.canCheckout"
+        @click="ExerciseStore.checkout()"
+        >Save to store</Button
+      >
 
       <h2>Clock</h2>
       Running: {{ clock.isRunning }}<br />
@@ -49,10 +65,16 @@ import { APP_ROUTES } from "@/router";
 import { useClock } from "@/utils/useClock";
 
 import AppLayout from "@/layouts/App.vue";
+import Button from "@/components/base/Button.vue";
+import ExperienceCard from "@/components/cards/Experience.vue";
+import MinimalStickyProgressBar from "@/components/progress/MinimalStickyProgressBar.vue";
 
 export default defineComponent({
   components: {
-    AppLayout
+    AppLayout,
+    Button,
+    ExperienceCard,
+    MinimalStickyProgressBar
   },
   props: {
     tree: {
@@ -66,10 +88,12 @@ export default defineComponent({
   },
   setup(props) {
     const ExerciseStore = props.exercise.store();
+    const ExerciseTreeStore = props.tree.store();
 
     const clock = useClock();
 
     return {
+      ExerciseTreeStore,
       ExerciseStore,
       clock,
       APP_ROUTES
