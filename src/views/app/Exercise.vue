@@ -1,4 +1,5 @@
 <template>
+  <MinimalStickyProgressBar :store="ExerciseTreeStore.experience" />
   <AppLayout>
     <h1>{{ $props.exercise.id }}</h1>
 
@@ -66,12 +67,14 @@ import { useClock } from "@/utils/useClock";
 import AppLayout from "@/layouts/App.vue";
 import Button from "@/components/base/Button.vue";
 import ExperienceCard from "@/components/cards/Experience.vue";
+import MinimalStickyProgressBar from "@/components/progress/MinimalStickyProgressBar.vue";
 
 export default defineComponent({
   components: {
     AppLayout,
     Button,
-    ExperienceCard
+    ExperienceCard,
+    MinimalStickyProgressBar
   },
   props: {
     tree: {

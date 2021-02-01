@@ -10,8 +10,9 @@
       </div>
 
       <div :class="$style.experiencePoints">
-        {{ store.remainingToNextLevel }} /
-        {{ store.requiredExperienceToNextLevel }}
+        <AnimatedNumber :number="store.remainingToNextLevel" />
+        /
+        <AnimatedNumber :number="store.requiredExperienceToNextLevel" />
         {{ $t("app.experience.short") }}
       </div>
     </div>
@@ -24,11 +25,13 @@ import { PropType, defineComponent } from "vue";
 import { APP_ROUTES } from "@/router";
 import { createExperienceStore } from "@/stores/createExperienceStore";
 
+import AnimatedNumber from "@/components/base/AnimatedNumber.ts";
 import Card from "@/components/cards/Index.vue";
 import ProgressBar from "@/components/base/ProgressBar.vue";
 
 export default defineComponent({
   components: {
+    AnimatedNumber,
     Card,
     ProgressBar
   },
